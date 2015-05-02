@@ -48,7 +48,50 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
         $Html = $this->getHtmlNoConstructor();
 
         $Html->setRouter(
-            new Interfaces\AbstractFormData
+            new \stdClass
+        );
+    }
+
+
+    public function testSettingValidAbstractFormData()
+    {
+        $Html = $this->getHtmlNoConstructor();
+
+        $this->assertTrue(
+            $Html->setFormData(
+                new Interfaces\AbstractFormData
+            )
+        );
+    }
+
+    public function testSettingInvalidAbstractFormDataThrowsException()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $Html = $this->getHtmlNoConstructor();
+
+        $Html->setFormData(
+            new \stdClass
+        );
+    }
+
+    public function testSettingValidAbstractAssets()
+    {
+        $Html = $this->getHtmlNoConstructor();
+
+        $this->assertTrue(
+            $Html->setAssets(
+                new Interfaces\AbstractAssets
+            )
+        );
+    }
+
+    public function testSettingInvalidAbstractAssetsThrowsException()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $Html = $this->getHtmlNoConstructor();
+
+        $Html->setAssets(
+            new \stdClass
         );
     }
 

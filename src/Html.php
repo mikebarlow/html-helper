@@ -30,6 +30,25 @@ class Html
         $this->setAssets($Assets);
     }
 
+
+    /**
+     * parse an array of attributes into a string
+     * to be added to a tag
+     *
+     * @param   array   Array of attributes
+     * @return  string  String to add to the tag
+     */
+    public function convertAttributes($attr)
+    {
+
+
+
+    }
+
+
+
+
+
     /**
      * check and set the router interface
      *
@@ -37,7 +56,7 @@ class Html
      * @return  bool
      * @throws  \InvalidArgumentException
      */
-    public function setRouter(AbstractRouter $Router)
+    public function setRouter($Router)
     {
         if (! is_object($Router) || ! $Router instanceof AbstractRouter) {
             throw new \InvalidArgumentException(
@@ -56,7 +75,7 @@ class Html
      * @return  bool
      * @throws  \InvalidArgumentException
      */
-    public function setFormData(AbstractFormData $FormData)
+    public function setFormData($FormData)
     {
         if (! is_object($FormData) || ! $FormData instanceof AbstractFormData) {
             throw new \InvalidArgumentException(
@@ -75,7 +94,7 @@ class Html
      * @return  bool
      * @throws  \InvalidArgumentException
      */
-    public function setAssets(AbstractAssets $Assets)
+    public function setAssets($Assets)
     {
         if (! is_object($Assets) || ! $Assets instanceof AbstractAssets) {
             throw new \InvalidArgumentException(
