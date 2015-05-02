@@ -1,6 +1,6 @@
 <?php
 
-namespace Snscript\Interfaces;
+namespace Snscripts\HtmlHelper\Interfaces;
 
 class AbstractFormData
 {
