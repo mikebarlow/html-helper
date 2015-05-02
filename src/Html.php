@@ -45,6 +45,8 @@ class Html
             );
         }
         $this->Router = $Router;
+
+        return true;
     }
 
     /**
@@ -62,6 +64,8 @@ class Html
             );
         }
         $this->FormData = $FormData;
+
+        return true;
     }
 
     /**
@@ -79,5 +83,7 @@ class Html
             );
         }
         $this->Assets = $Assets;
+
+        return true;
     }
 }
