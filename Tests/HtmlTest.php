@@ -20,6 +20,19 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
 
     /**
      * return an instance of the Html Helper
+     * with constructor
+     */
+    protected function getHtml()
+    {
+        return new Html(
+            new Interfaces\AbstractRouter,
+            new Interfaces\AbstractFormData,
+            new Interfaces\AbstractAssets
+        );
+    }
+
+    /**
+     * return an instance of the Html Helper
      * with constructor dissabled so we can test the constructor setters
      */
     protected function getHtmlNoConstructor()
@@ -95,4 +108,21 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testTagReturnsValidDivTagWithAttributes()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="myClass" id="content">Div Contents</div>',
+            $Html->tag(
+                'div',
+                array(
+                    'class' => 'myClass',
+                    'id' => 'content'
+                ),
+                'Div Contents',
+                true
+            )
+        );
+    }
 }

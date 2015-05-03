@@ -56,7 +56,7 @@ class Html
         }
 
         if ($close) {
-            return sprintf('<%s%s>%s</%1$s>', $tag, $attr, $contents);
+            return sprintf('<%s%s>%s</%1$s>', $tag, $attr, $content);
         } else {
             return sprintf('<%s%s>', $tag, $attr);
         }
