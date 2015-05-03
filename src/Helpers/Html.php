@@ -41,7 +41,7 @@ trait Html
 
         if (! empty($list) && is_array($list)) {
             foreach ($list as $key => $value) {
-                if (is_array($value) && (isset($value['list']) || isset($value['attr']) {
+                if (is_array($value) && (isset($value['list']) || isset($value['attr']))) {
                     $attr = (isset($value['attr'])) ? $value['attr'] : null;
                     $ulAttr = (isset($value['ulAttr'])) ? $value['ulAttr'] : null;
                     $subList = (isset($value['list'])) ? $this->ul($value['list'], $ulAttr) : '';
