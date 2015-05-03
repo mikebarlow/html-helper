@@ -13,6 +13,9 @@ class Html
     protected $AssetsInterface;
 
     protected $Attr;
+    public $Form;
+
+    use \Snscripts\HtmlHelper\Helper\Html;
 
     /**
      * setup the helper, providing the interfaces
@@ -32,8 +35,8 @@ class Html
         $this->setAssets($Assets);
 
         $this->Attr = new \Snscripts\HtmlAttributes\Attributes;
+        $this->Form = new \Snscripts\HtmlHelper\Helpers\Form;
     }
-
 
     /**
      * render a tag
