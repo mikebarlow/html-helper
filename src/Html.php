@@ -39,25 +39,23 @@ class Html
      * render a tag
      *
      * @param   string      tag to render
-     * @param   bool        self-closing
      * @param   array       attributes for the tag
      * @param   string      contents of tag when not self closing
+     * @param   bool        self-close the tag?
      * @return  string
      */
-    public function tag($tag, $selfClosing, $attr = '', $contents = null)
+    public function tag($tag, $attr = '', $content = null, $close = false)
     {
-        $str = '';
-
         $tag = strtolower($tag);
 
         if (! empty($attr) && is_array($attr)) {
             $attr = $this->Attr->attr($attr);
         }
 
-        if ($selfClosing) {
-            return sprintf('<%s%s />', $tag, $attr);
-        } else {
+        if ($close) {
             return sprintf('<%s%s>%s</%1$s>', $tag, $attr, $contents);
+        } else {
+            return sprintf('<%s%s>', $tag, $attr);
         }
     }
 
