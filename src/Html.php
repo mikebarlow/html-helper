@@ -12,6 +12,8 @@ class Html
     protected $FormDataInterface;
     protected $AssetsInterface;
 
+    protected $Attr;
+
     /**
      * setup the helper, providing the interfaces
      * for routes/ form data and assets
@@ -28,26 +30,36 @@ class Html
         $this->setRouter($Router);
         $this->setFormData($FormData);
         $this->setAssets($Assets);
+
+        $this->Attr = new \Snscripts\HtmlAttributes\Attributes;
     }
 
 
     /**
-     * parse an array of attributes into a string
-     * to be added to a tag
+     * render a tag
      *
-     * @param   array   Array of attributes
-     * @return  string  String to add to the tag
+     * @param   string      tag to render
+     * @param   bool        self-closing
+     * @param   array       attributes for the tag
+     * @param   string      contents of tag when not self closing
+     * @return  string
      */
-    public function convertAttributes($attr)
+    public function renderTag($tag, $selfClosing, $attr = '', $contents = null)
     {
+        $str = '';
 
+        $tag = strtolower($tag);
 
+        if (! empty($attr) && in_array($attr)) {
+            $attr = $this->Attr->attr($attr);
+        }
 
+        if ($selfClosing) {
+            return sprintf('<%s%s />', $tag, $attr);
+        } else {
+            return sprintf('<%s%s>%s</%1$s>', $tag, $attr, $contents);
+        }
     }
-
-
-
-
 
     /**
      * check and set the router interface
