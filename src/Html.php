@@ -50,7 +50,7 @@ class Html
 
         $tag = strtolower($tag);
 
-        if (! empty($attr) && in_array($attr)) {
+        if (! empty($attr) && is_array($attr)) {
             $attr = $this->Attr->attr($attr);
         }
 
