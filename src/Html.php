@@ -15,7 +15,7 @@ class Html
     protected $Attr;
     public $Form;
 
-    use \Snscripts\HtmlHelper\Helper\Html;
+    use \Snscripts\HtmlHelper\Helpers\Html;
 
     /**
      * setup the helper, providing the interfaces
@@ -47,7 +47,7 @@ class Html
      * @param   bool        self-close the tag?
      * @return  string
      */
-    public function tag($tag, $attr = '', $content = null, $close = false)
+    public function tag($tag, $attr = null, $content = null, $close = false)
     {
         $tag = strtolower($tag);
 
