@@ -44,7 +44,7 @@ class Html
      * @param   string      contents of tag when not self closing
      * @return  string
      */
-    public function renderTag($tag, $selfClosing, $attr = '', $contents = null)
+    public function tag($tag, $selfClosing, $attr = '', $contents = null)
     {
         $str = '';
 
