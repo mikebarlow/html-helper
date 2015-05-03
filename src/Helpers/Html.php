@@ -46,11 +46,11 @@ trait Html
                     $ulAttr = (isset($value['ulAttr'])) ? $value['ulAttr'] : null;
                     $subList = (isset($value['list'])) ? $this->ul($value['list'], $ulAttr) : '';
 
-                    $out .= $this->tag('li', $attr, $key . $subList);
+                    $out .= $this->tag('li', $attr, $key . $subList, true);
                 } elseif (is_array($value)) {
-                    $out .= $this->tag('li', null, $key . $this->ul($value['list']));
+                    $out .= $this->tag('li', null, $key . $this->ul($value), true);
                 } else {
-                    $out .= $this->tag('li', null, $value);
+                    $out .= $this->tag('li', null, $value, true);
                 }
             }
         }
