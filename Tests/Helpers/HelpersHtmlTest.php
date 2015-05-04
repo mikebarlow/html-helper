@@ -12,9 +12,9 @@ class HelpersHtmlTest extends \PHPUnit_Framework_TestCase
     protected function getHtml()
     {
         return new Html(
-            new Interfaces\AbstractRouter,
-            new Interfaces\AbstractFormData,
-            new Interfaces\AbstractAssets
+            new Interfaces\BasicRouter,
+            new Interfaces\BasicFormData,
+            new Interfaces\BasicAssets
         );
     }
 
@@ -143,6 +143,23 @@ class HelpersHtmlTest extends \PHPUnit_Framework_TestCase
                             'this list should have attributes'
                         )
                     )
+                )
+            )
+        );
+    }
+
+    public function testLinkReturnsValidElements()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<a target="_blank" class="myClass" href="http://google.com">Google</a>',
+            $Html->link(
+                'Google',
+                'http://google.com',
+                array(
+                    'target' => '_blank',
+                    'class' => 'myClass'
                 )
             )
         );

@@ -2,9 +2,9 @@
 
 namespace Snscripts\HtmlHelper;
 
-use \Snscripts\HtmlHelper\Interfaces\AbstractRouter;
-use \Snscripts\HtmlHelper\Interfaces\AbstractFormData;
-use \Snscripts\HtmlHelper\Interfaces\AbstractAssets;
+use \Snscripts\HtmlHelper\Interfaces\Router as RouterInterface;
+use \Snscripts\HtmlHelper\Interfaces\FormData as FormDataInterface;
+use \Snscripts\HtmlHelper\Interfaces\Assets as AssetsInterface;
 
 class Html
 {
@@ -21,14 +21,14 @@ class Html
      * setup the helper, providing the interfaces
      * for routes/ form data and assets
      *
-     * @param   Object  Instance of an AbstractRouter
-     * @param   Object  Instance of an AbstractFormData
-     * @param   Object  Instance of an AbstractAssets
+     * @param   Object  Instance of an RouterInterface
+     * @param   Object  Instance of an FormDataInterface
+     * @param   Object  Instance of an AssetsInterface
      */
     public function __construct(
-        AbstractRouter $Router,
-        AbstractFormData $FormData,
-        AbstractAssets $Assets
+        RouterInterface $Router,
+        FormDataInterface $FormData,
+        AssetsInterface $Assets
     ) {
         $this->setRouter($Router);
         $this->setFormData($FormData);
@@ -65,15 +65,15 @@ class Html
     /**
      * check and set the router interface
      *
-     * @param   Object  Instance of an AbstractRouter
+     * @param   Object  Instance of an RouterInterface
      * @return  bool
      * @throws  \InvalidArgumentException
      */
     public function setRouter($Router)
     {
-        if (! is_object($Router) || ! $Router instanceof AbstractRouter) {
+        if (! is_object($Router) || ! $Router instanceof RouterInterface) {
             throw new \InvalidArgumentException(
-                'The Router Interface must be a valid AbstractRouter Object'
+                'The Router Interface must be a valid RouterInterface Object'
             );
         }
         $this->Router = $Router;
@@ -84,15 +84,15 @@ class Html
     /**
      * check and set the form data interface
      *
-     * @param   Object  Instance of an AbstractFormData
+     * @param   Object  Instance of an FormDataInterface
      * @return  bool
      * @throws  \InvalidArgumentException
      */
     public function setFormData($FormData)
     {
-        if (! is_object($FormData) || ! $FormData instanceof AbstractFormData) {
+        if (! is_object($FormData) || ! $FormData instanceof FormDataInterface) {
             throw new \InvalidArgumentException(
-                'The FormData Interface must be a valid AbstractFormData Object'
+                'The FormData Interface must be a valid FormDataInterface Object'
             );
         }
         $this->FormData = $FormData;
@@ -103,15 +103,15 @@ class Html
     /**
      * check and set the Asset interface
      *
-     * @param   Object  Instance of an AbstractAssets
+     * @param   Object  Instance of an AssetsInterface
      * @return  bool
      * @throws  \InvalidArgumentException
      */
     public function setAssets($Assets)
     {
-        if (! is_object($Assets) || ! $Assets instanceof AbstractAssets) {
+        if (! is_object($Assets) || ! $Assets instanceof AssetsInterface) {
             throw new \InvalidArgumentException(
-                'The Assets Interface must be a valid AbstractAssets Object'
+                'The Assets Interface must be a valid AssetsInterface Object'
             );
         }
         $this->Assets = $Assets;

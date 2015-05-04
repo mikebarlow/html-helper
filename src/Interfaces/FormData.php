@@ -2,13 +2,7 @@
 
 namespace Snscripts\HtmlHelper\Interfaces;
 
-class AbstractFormData
+interface FormData
 {
-
-
-
-
-
-
 
 }

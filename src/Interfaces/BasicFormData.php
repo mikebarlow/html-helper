@@ -2,13 +2,7 @@
 
 namespace Snscripts\HtmlHelper\Interfaces;
 
-class AbstractAssets
+class BasicFormData implements FormData
 {
-
-
-
-
-
-
 
 }

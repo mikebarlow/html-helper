@@ -11,9 +11,9 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             'Snscripts\HtmlHelper\Html',
             new Html(
-                new Interfaces\AbstractRouter,
-                new Interfaces\AbstractFormData,
-                new Interfaces\AbstractAssets
+                new Interfaces\BasicRouter,
+                new Interfaces\BasicFormData,
+                new Interfaces\BasicAssets
             )
         );
     }
@@ -25,9 +25,9 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
     protected function getHtml()
     {
         return new Html(
-            new Interfaces\AbstractRouter,
-            new Interfaces\AbstractFormData,
-            new Interfaces\AbstractAssets
+            new Interfaces\BasicRouter,
+            new Interfaces\BasicFormData,
+            new Interfaces\BasicAssets
         );
     }
 
@@ -50,7 +50,7 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(
             $Html->setRouter(
-                new Interfaces\AbstractRouter
+                new Interfaces\BasicRouter
             )
         );
     }
@@ -72,7 +72,7 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(
             $Html->setFormData(
-                new Interfaces\AbstractFormData
+                new Interfaces\BasicFormData
             )
         );
     }
@@ -93,7 +93,7 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(
             $Html->setAssets(
-                new Interfaces\AbstractAssets
+                new Interfaces\BasicAssets
             )
         );
     }

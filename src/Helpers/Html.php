@@ -96,4 +96,19 @@ trait Html
 
         return $out;
     }
+
+    /**
+     * create a link
+     *
+     * @param   string  Link text
+     * @param   mixed   url data. Will be passed to the router interface for processing
+     * @param   array   attributes to place on the link tag
+     * @return  string
+     */
+    public function link($text, $url = null, $attr = null)
+    {
+        $url = $this->Router->getUrlForLink($url);
+        $attr['href'] = $url;
+        return $this->tag('a', $attr, $text, true);
+    }
 }

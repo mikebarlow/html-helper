@@ -2,9 +2,8 @@
 
 namespace Snscripts\HtmlHelper\Interfaces;
 
-class AbstractRouter
+interface Assets
 {
-
 
 
 
