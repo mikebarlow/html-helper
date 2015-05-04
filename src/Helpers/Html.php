@@ -40,7 +40,7 @@ trait Html
         $out = $this->tag('ul', $attr);
 
         if (! empty($list) && is_array($list)) {
-            $out .= $this->list($list);
+            $out .= $this->processList($list);
         }
 
         $out .= $this->tag('/ul');
@@ -60,7 +60,7 @@ trait Html
         $out = $this->tag('ol', $attr);
 
         if (! empty($list) && is_array($list)) {
-            $out .= $this->list($list, 'ol');
+            $out .= $this->processList($list, 'ol');
         }
 
         $out .= $this->tag('/ol');
@@ -76,15 +76,15 @@ trait Html
      * @param   string  method to use for sub-lists
      * @return  string
      */
-    public function list($list, $subListType = 'ul')
+    public function processList($list, $subListType = 'ul')
     {
         $out = '';
 
         foreach ($list as $key => $value) {
             if (is_array($value) && (isset($value['list']) || isset($value['attr']))) {
                 $attr = (isset($value['attr'])) ? $value['attr'] : null;
-                $ulAttr = (isset($value['ulAttr'])) ? $value['ulAttr'] : null;
-                $subList = (isset($value['list'])) ? $this->{$subListType}($value['list'], $ulAttr) : '';
+                $listAttr = (isset($value['listAttr'])) ? $value['listAttr'] : null;
+                $subList = (isset($value['list'])) ? $this->{$subListType}($value['list'], $listAttr) : '';
 
                 $out .= $this->tag('li', $attr, $key . $subList, true);
             } elseif (is_array($value)) {

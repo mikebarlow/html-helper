@@ -67,7 +67,7 @@ class HelpersHtmlTest extends \PHPUnit_Framework_TestCase
                         'attr' => array(
                             'id' => 'listID'
                         ),
-                        'ulAttr' => array(
+                        'listAttr' => array(
                             'id' => 'sub-list'
                         ),
                         'list' => array(
@@ -101,7 +101,7 @@ class HelpersHtmlTest extends \PHPUnit_Framework_TestCase
                         'attr' => array(
                             'id' => 'listID'
                         ),
-                        'ulAttr' => array(
+                        'listAttr' => array(
                             'id' => 'sub-list'
                         ),
                         'list' => array(
@@ -123,7 +123,7 @@ class HelpersHtmlTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             '<li>this is a list item</li><li>this is a list item 2</li><li>sub-item<ul><li>will they work?</li><li>or won\'t they, who knows?</li></ul></li><li id="listID">subitem attr!<ul id="sub-list"><li>this is a sub item</li><li>this list should have attributes</li></ul></li>',
-            $Html->list(
+            $Html->processList(
                 array(
                     'this is a list item',
                     'this is a list item 2',
@@ -135,7 +135,7 @@ class HelpersHtmlTest extends \PHPUnit_Framework_TestCase
                         'attr' => array(
                             'id' => 'listID'
                         ),
-                        'ulAttr' => array(
+                        'listAttr' => array(
                             'id' => 'sub-list'
                         ),
                         'list' => array(
