@@ -40,7 +40,7 @@ trait Html
         $out = $this->tag('ul', $attr);
 
         if (! empty($list) && is_array($list)) {
-            $out .= $this->processList($list);
+            $out .= $this->list($list);
         }
 
         $out .= $this->tag('/ul');
@@ -60,7 +60,7 @@ trait Html
         $out = $this->tag('ol', $attr);
 
         if (! empty($list) && is_array($list)) {
-            $out .= $this->processList($list, 'ol');
+            $out .= $this->list($list, 'ol');
         }
 
         $out .= $this->tag('/ol');
@@ -76,7 +76,7 @@ trait Html
      * @param   string  method to use for sub-lists
      * @return  string
      */
-    public function processList($list, $subListType = 'ul')
+    public function list($list, $subListType = 'ul')
     {
         $out = '';
 

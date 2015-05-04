@@ -117,13 +117,13 @@ class HelpersHtmlTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testProcessListReturnsValidElements()
+    public function testListReturnsValidElements()
     {
         $Html = $this->getHtml();
 
         $this->assertSame(
             '<li>this is a list item</li><li>this is a list item 2</li><li>sub-item<ul><li>will they work?</li><li>or won\'t they, who knows?</li></ul></li><li id="listID">subitem attr!<ul id="sub-list"><li>this is a sub item</li><li>this list should have attributes</li></ul></li>',
-            $Html->processList(
+            $Html->list(
                 array(
                     'this is a list item',
                     'this is a list item 2',
