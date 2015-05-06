@@ -119,7 +119,7 @@ trait Html
      * @param   array   attributes to be placed on the img tag
      * @return  string
      */
-    public function image($src, $attr)
+    public function image($src, $attr = array())
     {
         $src = $this->Assets->getImage($src);
         $attr['src'] = $src;
@@ -127,13 +127,13 @@ trait Html
     }
 
     /**
-     * create an style link
+     * create a style link
      *
      * @param   mixed   style path data - will be passed to the assets interface for processing
      * @param   array   attributes to be placed on the link tag
      * @return  string
      */
-    public function style($src, $attr)
+    public function style($src, $attr = array())
     {
         $src = $this->Assets->getStyle($src);
         $attr['href'] = $src;
@@ -158,7 +158,17 @@ trait Html
         return $this->tag('link', $attr);
     }
 
-
-
-
+    /**
+     * create a script tag
+     *
+     * @param   mixed   script path data - will be passed to the assets interface for processing
+     * @param   array   attributes to be placed on the script tag
+     * @return  string
+     */
+    public function script($src, $attr = array())
+    {
+        $src = $this->Assets->getScript($src);
+        $attr['src'] = $src;
+        return $this->tag('script', $attr, '', true);
+    }
 }

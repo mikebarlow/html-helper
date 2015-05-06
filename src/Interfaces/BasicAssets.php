@@ -25,4 +25,15 @@ class BasicAssets implements Assets
     {
         return $css;
     }
+
+    /**
+     * base function to return the script path for the js script tag
+     *
+     * @param   mixed   js path data received from the script method
+     * @return  string  url to pass to script.src
+     */
+    public function getScript($js)
+    {
+        return $js;
+    }
 }

@@ -197,5 +197,16 @@ class HelpersHtmlTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testScriptReturnsValidElement()
+    {
+        $Html = $this->getHtml();
 
+        $this->assertSame(
+            '<script src="/assets/js/site.js"></script>',
+            $Html->script(
+                '/assets/js/site.js'
+            )
+        );
+
+    }
 }
