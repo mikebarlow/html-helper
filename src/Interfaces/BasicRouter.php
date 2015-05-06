@@ -10,7 +10,7 @@ class BasicRouter implements Router
      * @param   mixed   url data received from the link method
      * @return  string  url to pass to href
      */
-    public function getUrlForLink($url)
+    public function getUrl($url)
     {
         return $url;
     }

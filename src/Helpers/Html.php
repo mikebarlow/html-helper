@@ -107,8 +107,58 @@ trait Html
      */
     public function link($text, $url = null, $attr = null)
     {
-        $url = $this->Router->getUrlForLink($url);
+        $url = $this->Router->getUrl($url);
         $attr['href'] = $url;
         return $this->tag('a', $attr, $text, true);
     }
+
+    /**
+     * create an image
+     *
+     * @param   mixed   image path data - will be passed to the assets interface for processing
+     * @param   array   attributes to be placed on the img tag
+     * @return  string
+     */
+    public function image($src, $attr)
+    {
+        $src = $this->Assets->getImage($src);
+        $attr['src'] = $src;
+        return $this->tag('img', $attr);
+    }
+
+    /**
+     * create an style link
+     *
+     * @param   mixed   style path data - will be passed to the assets interface for processing
+     * @param   array   attributes to be placed on the link tag
+     * @return  string
+     */
+    public function style($src, $attr)
+    {
+        $src = $this->Assets->getStyle($src);
+        $attr['href'] = $src;
+
+/*        $attr = $this->Attr->mergeAttr(
+            array(
+                'media' => 'screen',
+                'rel' => 'stylesheet',
+                'type' => 'text/css'
+            ),
+            $attr
+        );*/
+        $attr = array_merge(
+            array(
+                'media' => 'screen',
+                'rel' => 'stylesheet',
+                'type' => 'text/css'
+            ),
+            $attr
+        );
+
+        return $this->tag('link', $attr);
+    }
+
+
+
+
 }

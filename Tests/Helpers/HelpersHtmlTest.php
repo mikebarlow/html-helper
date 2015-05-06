@@ -164,4 +164,38 @@ class HelpersHtmlTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testImageReturnsValidElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<img alt="This is alt text" title="This is the title" class="logo" src="/assets/img/logo.png">',
+            $Html->image(
+                '/assets/img/logo.png',
+                array(
+                    'alt' => 'This is alt text',
+                    'title' => 'This is the title',
+                    'class' => 'logo'
+                )
+            )
+        );
+    }
+
+    public function testStyleReturnsValidElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<link media="print" rel="stylesheet" type="text/css" href="/assets/css/print.css">',
+            $Html->style(
+                '/assets/css/print.css',
+                array(
+                    'media' => 'print'
+                )
+            )
+        );
+    }
+
+
 }
