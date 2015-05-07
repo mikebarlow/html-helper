@@ -110,7 +110,7 @@ class Form
         // remove any wrapper attributes
         // these will be dealt with later
         $wrapper = array();
-        if (! empty($attr['wrapper'])) {
+        if (isset($attr['wrapper'])) {
             $wrapper = $attr['wrapper'];
             unset($attr['wrapper']);
         }

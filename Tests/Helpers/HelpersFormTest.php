@@ -270,4 +270,42 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testInputCanTurnOffLabels()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input text" id="YourName"><input class="required" id="DataUserName" type="text" name="data[User][name]"><span>Enter Full Name</span></div>',
+            $Html->Form->input(
+                'data.User.name',
+                false,
+                array(
+                    'wrapper' => array(
+                        'id' => 'YourName'
+                    ),
+                    'class' => 'required',
+                    'after' => '<span>Enter Full Name</span>'
+                )
+            )
+        );
+    }
+
+    public function testInputCanTurnOffWrappers()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<label for="DataUserName">Your Name</label><input class="required" id="DataUserName" type="text" name="data[User][name]"><span>Enter Full Name</span>',
+            $Html->Form->input(
+                'data.User.name',
+                'Your Name',
+                array(
+                    'wrapper' => false,
+                    'class' => 'required',
+                    'after' => '<span>Enter Full Name</span>'
+                )
+            )
+        );
+    }
 }
