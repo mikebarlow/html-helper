@@ -10,7 +10,7 @@ class Form
      * input types requiring custom tag
      * @param   array
      */
-    public $nonInputTypes = array(
+    public $customGenerate = array(
         'textarea',
         'select',
         'button'
@@ -78,6 +78,84 @@ class Form
     }
 
     /**
+     * generate a complete input with wrapped div and label
+     *
+     * @param   string          input name (dot notation for multi-dimensional array)
+     * @param   string|array    Label string or array of label value and attributes
+     * @param   array           input attributes
+     * @return  string
+     */
+    public function input($name, $label, $attr = array())
+    {
+        // generate an id if none exists
+        if (empty($attr['id'])) {
+            $attr['id'] = $this->transformNameForID($name);
+        }
+
+        // build the label
+        if ($label !== false) {
+            $labelAttr = [];
+            if (is_array($label)) {
+                $labelAttr = $label;
+                $label = (! empty($label['value'])) ? $label['value'] : $name;
+                unset($labelAttr['value']);
+            }
+
+            $labelAttr['for'] = $attr['id'];
+            $label = $this->label($label, $labelAttr);
+        } else {
+            $label = '';
+        }
+
+        // remove any wrapper attributes
+        // these will be dealt with later
+        $wrapper = array();
+        if (! empty($attr['wrapper'])) {
+            $wrapper = $attr['wrapper'];
+            unset($attr['wrapper']);
+        }
+
+        // any before / between / after set
+        // $attr passed by reference
+        $injects = $this->getInjects($attr);
+
+        // generate the actual field
+        if (empty($attr['type'])) {
+            $attr['type'] = 'text';
+        }
+
+        $field = $this->generateField(
+            $this->transformName($name),
+            $attr
+        );
+
+        // build the contents for the wrapper
+        $contents =
+            $injects['before'] .
+            $label .
+            $injects['between'] .
+            $field .
+            $injects['after'];
+
+        // check if they actually want a wrapper
+        if (isset($wrapper) && $wrapper === false) {
+            return $contents;
+        }
+
+        // build up the wrapper info
+        // should return the tag and attributes array
+        $wrapperInfo = $this->getWrapper($wrapper, $attr);
+
+        // return the final wrapper tag with the contents
+        return $this->Html->tag(
+            $wrapperInfo['tag'],
+            $wrapperInfo['attr'],
+            $contents,
+            true
+        );
+    }
+
+    /**
      * generate a field
      *
      * @param   string  The type of input field to create
@@ -88,11 +166,7 @@ class Form
     {
         $tag = 'input';
 
-        if (empty($attr['type'])) {
-            $attr['type'] = 'text';
-        }
-
-        if (in_array($attr['type'], $this->nonInputTypes)) {
+        if (in_array($attr['type'], $this->customGenerate)) {
             $tag = $attr['type'];
         }
 
@@ -176,5 +250,109 @@ class Form
         }
 
         return $return;
+    }
+
+    /**
+     * transform the dot notation name into proper name
+     *
+     * @param   string  Dot notation input name
+     * @return  string  transformed name for input
+     */
+    public function transformName($name)
+    {
+        if (strpos($name, '.') !== false) {
+            $bits = explode('.', $name, 2);
+            $bits['1'] = '[' . str_replace('.', '][', $bits['1']) . ']';
+            return implode('', $bits);
+        } else {
+            return $name;
+        }
+    }
+
+    /**
+     * transform the dot notation name into a name for input ID
+     * if no ID was passed
+     *
+     * @param   string  Dot notation input name
+     * @return  string  transformed name for input ID
+     */
+    public function transformNameForID($name)
+    {
+        $bits = explode('.', $name);
+        array_walk(
+            $bits,
+            function (&$value, $key) {
+                $value = ucfirst(strtolower($value));
+            }
+        );
+        return implode('', $bits);
+    }
+
+    /**
+     * get injections from the attributes
+     * allows data to be entered before, between, after
+     *
+     * @param   array   attributes array (Passed by reference)
+     * @return  array
+     */
+    public function getInjects(&$attr)
+    {
+        $inject = array(
+            'before' => '',
+            'between' => '',
+            'after' => ''
+        );
+
+        if (! empty($attr['before'])) {
+            $inject['before'] = $attr['before'];
+            unset($attr['before']);
+        }
+
+        if (! empty($attr['between'])) {
+            $inject['between'] = $attr['between'];
+            unset($attr['between']);
+        }
+
+        if (! empty($attr['after'])) {
+            $inject['after'] = $attr['after'];
+            unset($attr['after']);
+        }
+
+        return $inject;
+    }
+
+    /**
+     * given any user defined wrapper instructions
+     * build the wrapper data
+     *
+     * @param   array   Array of any passed wrapper info
+     * @param   array   Array of the inputs attributes
+     * @return  array   two element array of tag / attr
+     */
+    public function getWrapper($wrapper, $attr)
+    {
+        $type = '';
+        if (! empty($attr['type'])) {
+            $type = ' ' . $attr['type'];
+        }
+
+        $defaults = array(
+            'tag' => 'div',
+            'class' => 'input' . $type
+        );
+
+        $wrapperAttr = array_merge(
+            $defaults,
+            $wrapper
+        );
+
+        // double check for the presence of a tag element
+        $tag = $wrapperAttr['tag'];
+        unset($wrapperAttr['tag']);
+
+        return array(
+            'tag' => $tag,
+            'attr' => $wrapperAttr
+        );
     }
 }

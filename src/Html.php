@@ -194,14 +194,6 @@ class Html
         $src = $this->Assets->getStyle($src);
         $attr['href'] = $src;
 
-/*        $attr = $this->Attr->mergeAttr(
-            array(
-                'media' => 'screen',
-                'rel' => 'stylesheet',
-                'type' => 'text/css'
-            ),
-            $attr
-        );*/
         $attr = array_merge(
             array(
                 'media' => 'screen',

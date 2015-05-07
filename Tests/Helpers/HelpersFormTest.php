@@ -140,4 +140,134 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testTransformNameReturnsCorrectlyFormattedInputName()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            'data[User][email]',
+            $Html->Form->transformName('data.User.email')
+        );
+
+        $this->assertSame(
+            'data[email]',
+            $Html->Form->transformName('data.email')
+        );
+
+        $this->assertSame(
+            'email',
+            $Html->Form->transformName('email')
+        );
+    }
+
+    public function testTransformNameForIDReturnsCorrectlyFormattedID()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            'DataUserEmail',
+            $Html->Form->transformNameForID('data.User.email')
+        );
+
+        $this->assertSame(
+            'DataEmail',
+            $Html->Form->transformNameForID('data.email')
+        );
+
+        $this->assertSame(
+            'Email',
+            $Html->Form->transformNameForID('email')
+        );
+    }
+
+    public function testGetInjectsCorrectlyGetsTheValuesFromArray()
+    {
+        $Html = $this->getHtml();
+
+        $attr = array(
+            'type' => 'text',
+            'before' => '&pound;',
+            'class' => 'amount',
+            'after' => 'pence'
+        );
+
+        $this->assertSame(
+            array(
+                'before' => '&pound;',
+                'between' => '',
+                'after' => 'pence'
+            ),
+            $Html->Form->getInjects($attr)
+        );
+
+        // get injects should remove elements from the array, check it does
+        $this->assertSame(
+            array(
+                'type' => 'text',
+                'class' => 'amount'
+            ),
+            $attr
+        );
+    }
+
+    public function testGetWrapperReturnsCorrectArray()
+    {
+        $Html = $this->getHtml();
+
+        $attr = array(
+            'type' => 'text',
+            'before' => '&pound;',
+            'class' => 'amount',
+            'after' => 'pence'
+        );
+
+        $this->assertSame(
+            array(
+                'tag' => 'div',
+                'attr' => array(
+                    'class' => 'input text'
+                )
+            ),
+            $Html->Form->getWrapper(array(), $attr)
+        );
+
+        $this->assertSame(
+            array(
+                'tag' => 'span',
+                'attr' => array(
+                    'class' => 'customClass',
+                    'id' => 'divId'
+                )
+            ),
+            $Html->Form->getWrapper(
+                array(
+                    'tag' => 'span',
+                    'class' => 'customClass',
+                    'id' => 'divId'
+                ),
+                $attr
+            )
+        );
+    }
+
+    public function testInputReturnsValidInputWithLabelAndWrapper()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input text" id="YourName"><label for="DataUserName">Your Name</label><input class="required" id="DataUserName" type="text" name="data[User][name]"><span>Enter Full Name</span></div>',
+            $Html->Form->input(
+                'data.User.name',
+                'Your Name',
+                array(
+                    'wrapper' => array(
+                        'id' => 'YourName'
+                    ),
+                    'class' => 'required',
+                    'after' => '<span>Enter Full Name</span>'
+                )
+            )
+        );
+    }
 }
