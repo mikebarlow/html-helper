@@ -216,7 +216,7 @@ class Form
         }
         $attr['name'] = $name;
 
-        $attr = $this->getPostData($name, $attr);
+        $attr = $this->getPostData($attr);
 
         if ($tag !== 'input') {
             $generate = 'generate' . ucfirst(strtolower($tag)) . 'Field';
@@ -453,16 +453,18 @@ class Form
 
         $value = $this->FormData->getValue($attr['name']);
 
-        $isCheckbox = (isset($attr['type']) && $attr['type'] == 'checkbox');
-        $isRadio = (isset($attr['type']) && $attr['type'] == 'radio');
-        $isSelect = (isset($attr['type']) && $attr['type'] == 'select');
+        if ($value !== null) {
+            $isCheckbox = (isset($attr['type']) && $attr['type'] == 'checkbox');
+            $isRadio = (isset($attr['type']) && $attr['type'] == 'radio');
+            $isSelect = (isset($attr['type']) && $attr['type'] == 'select');
 
-        if ($isCheckbox || $isRadio) {
-            $attr['checked'] = $value;
-        } elseif ($isSelect) {
-            $attr['selected'] = $value;
-        } else {
-            $attr['value'] = $value;
+            if ($isCheckbox || $isRadio) {
+                $attr['checked'] = $value;
+            } elseif ($isSelect) {
+                $attr['selected'] = $value;
+            } else {
+                $attr['value'] = $value;
+            }
         }
 
         return $attr;
