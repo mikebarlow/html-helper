@@ -2,8 +2,12 @@
 
 namespace Snscripts\HtmlHelper\Helpers;
 
+use \Snscripts\HtmlHelper\Interfaces\FormData as FormDataInterface;
+use \Snscripts\HtmlHelper\Html as HtmlObject;
+
 class Form
 {
+    protected $FormData;
     protected $Html;
 
     /**
@@ -26,7 +30,7 @@ class Form
         ),
         'default' => array(
             'before', 'label', 'between', 'field', 'after'
-        ),
+        )
     );
 
     /**
@@ -35,9 +39,9 @@ class Form
      *
      * @param   Object  Instance of the Html Helper Object
      */
-    public function __construct(\Snscripts\HtmlHelper\Html $Html)
+    public function __construct(FormDataInterface $FormData)
     {
-        $this->Html = $Html;
+        $this->setFormData($FormData);
     }
 
     /**
@@ -210,8 +214,9 @@ class Form
         if (in_array($attr['type'], $this->customGenerate)) {
             $tag = $attr['type'];
         }
-
         $attr['name'] = $name;
+
+        $attr = $this->getPostData($name, $attr);
 
         if ($tag !== 'input') {
             $generate = 'generate' . ucfirst(strtolower($tag)) . 'Field';
@@ -229,6 +234,10 @@ class Form
      */
     public function generateCheckboxField($attr)
     {
+        if (empty($attr['name'])) {
+            return '';
+        }
+
         $out = '';
 
         if ((isset($attr['hiddenCheckbox']) && $attr['hiddenCheckbox']) || ! isset($attr['hiddenCheckbox'])) {
@@ -428,5 +437,72 @@ class Form
             'tag' => $tag,
             'attr' => $wrapperAttr
         );
+    }
+
+    /**
+     * use the FormData interface and find any post data
+     *
+     * @param   array   Array of attributes for the tag
+     * @return  array   Return the attribute array with added post data
+     */
+    public function getPostData($attr)
+    {
+        if (empty($attr['name'])) {
+            return $attr;
+        }
+
+        $value = $this->FormData->getValue($attr['name']);
+
+        $isCheckbox = (isset($attr['type']) && $attr['type'] == 'checkbox');
+        $isRadio = (isset($attr['type']) && $attr['type'] == 'radio');
+        $isSelect = (isset($attr['type']) && $attr['type'] == 'select');
+
+        if ($isCheckbox || $isRadio) {
+            $attr['checked'] = $value;
+        } elseif ($isSelect) {
+            $attr['selected'] = $value;
+        } else {
+            $attr['value'] = $value;
+        }
+
+        return $attr;
+    }
+
+    /**
+     * check and set the form data interface
+     *
+     * @param   Object  Instance of an FormDataInterface
+     * @return  bool
+     * @throws  \InvalidArgumentException
+     */
+    public function setFormData($FormData)
+    {
+        if (! is_object($FormData) || ! $FormData instanceof FormDataInterface) {
+            throw new \InvalidArgumentException(
+                'The FormData Interface must be a valid FormDataInterface Object'
+            );
+        }
+        $this->FormData = $FormData;
+
+        return true;
+    }
+
+    /**
+     * check and set the HTML Object
+     *
+     * @param   Object  Instance of an Html
+     * @return  bool
+     * @throws  \InvalidArgumentException
+     */
+    public function setHtml($Html)
+    {
+        if (! is_object($Html) || ! $Html instanceof HtmlObject) {
+            throw new \InvalidArgumentException(
+                'The HTML Object must be a valid HTML Object'
+            );
+        }
+        $this->Html = $Html;
+
+        return true;
     }
 }

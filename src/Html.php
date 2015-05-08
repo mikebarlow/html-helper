@@ -3,14 +3,13 @@
 namespace Snscripts\HtmlHelper;
 
 use \Snscripts\HtmlHelper\Interfaces\Router as RouterInterface;
-use \Snscripts\HtmlHelper\Interfaces\FormData as FormDataInterface;
 use \Snscripts\HtmlHelper\Interfaces\Assets as AssetsInterface;
+use \Snscripts\HtmlHelper\Helpers;
 
 class Html
 {
-    protected $RouterInterface;
-    protected $FormDataInterface;
-    protected $AssetsInterface;
+    protected $Router;
+    protected $Assets;
 
     protected $Attr;
     public $Form;
@@ -24,16 +23,19 @@ class Html
      * @param   Object  Instance of an AssetsInterface
      */
     public function __construct(
+        Helpers\Form $Form,
         RouterInterface $Router,
-        FormDataInterface $FormData,
         AssetsInterface $Assets
     ) {
+        $this->setForm($Form);
         $this->setRouter($Router);
-        $this->setFormData($FormData);
         $this->setAssets($Assets);
 
+        if ($this->Form instanceof Helpers\Form) {
+            $this->Form->setHtml($this);
+        }
+
         $this->Attr = new \Snscripts\HtmlAttributes\Attributes;
-        $this->Form = new \Snscripts\HtmlHelper\Helpers\Form($this);
     }
 
     /**
@@ -240,25 +242,6 @@ class Html
     }
 
     /**
-     * check and set the form data interface
-     *
-     * @param   Object  Instance of an FormDataInterface
-     * @return  bool
-     * @throws  \InvalidArgumentException
-     */
-    public function setFormData($FormData)
-    {
-        if (! is_object($FormData) || ! $FormData instanceof FormDataInterface) {
-            throw new \InvalidArgumentException(
-                'The FormData Interface must be a valid FormDataInterface Object'
-            );
-        }
-        $this->FormData = $FormData;
-
-        return true;
-    }
-
-    /**
      * check and set the Asset interface
      *
      * @param   Object  Instance of an AssetsInterface
@@ -273,6 +256,25 @@ class Html
             );
         }
         $this->Assets = $Assets;
+
+        return true;
+    }
+
+    /**
+     * check and set the Form Object
+     *
+     * @param   Object  Instance of an Helpers\Form
+     * @return  bool
+     * @throws  \InvalidArgumentException
+     */
+    public function setForm($Form)
+    {
+        if (! is_object($Form) || ! $Form instanceof Helpers\Form) {
+            throw new \InvalidArgumentException(
+                'The Form Object must be a valid Helpers\Form Object'
+            );
+        }
+        $this->Form = $Form;
 
         return true;
     }

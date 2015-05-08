@@ -2,9 +2,20 @@
 
 use Snscripts\HtmlHelper\Html;
 use Snscripts\HtmlHelper\Interfaces;
+use Snscripts\HtmlHelper\Helpers;
 
 class HelpersFormTest extends \PHPUnit_Framework_TestCase
 {
+    public function testCanCreateInstance()
+    {
+        $this->assertInstanceOf(
+            'Snscripts\HtmlHelper\Helpers\Form',
+            new Helpers\Form(
+                new Interfaces\BasicFormData
+            )
+        );
+    }
+
     /**
      * return an instance of the Html Helper
      * with constructor
@@ -12,9 +23,45 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
     protected function getHtml()
     {
         return new Html(
+            new Helpers\Form(
+                new Interfaces\BasicFormData
+            ),
             new Interfaces\BasicRouter,
-            new Interfaces\BasicFormData,
             new Interfaces\BasicAssets
+        );
+    }
+
+    /**
+     * return an instance of the Html Helper
+     * with constructor dissabled so we can test the constructor setters
+     */
+    protected function getFormNoConstructor()
+    {
+        return $this->getMockBuilder('\Snscripts\HtmlHelper\Helpers\Form')
+            ->setMethods(array('__construct'))
+            ->setConstructorArgs(array(false, false))
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    public function testSettingValidAbstractFormData()
+    {
+        $Form = $this->getFormNoConstructor();
+
+        $this->assertTrue(
+            $Form->setFormData(
+                new Interfaces\BasicFormData
+            )
+        );
+    }
+
+    public function testSettingInvalidAbstractFormDataThrowsException()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $Form = $this->getFormNoConstructor();
+
+        $Form->setFormData(
+            new \stdClass
         );
     }
 
@@ -359,6 +406,37 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                     'type' => 'checkbox'
                 )
             )
+        );
+    }
+
+    public function testGetPostDataReturnsValidAttrArrayWithData()
+    {
+        $Html = $this->getHtml();
+
+        $_POST = array(
+            'User' => array(
+                'email' => 'john@example.com'
+            ),
+            'terms' => 1
+        );
+
+        $this->assertSame(
+            array(
+                'name' => 'User.email',
+                'type' => 'text',
+                'class' => 'required',
+                'value' => 'john@example.com'
+            ),
+            $Html->Form->getPostData(array('name' => 'User.email', 'type' => 'text', 'class' => 'required'))
+        );
+
+        $this->assertSame(
+            array(
+                'name' => 'terms',
+                'type' => 'checkbox',
+                'checked' => 1
+            ),
+            $Html->Form->getPostData(array('name' => 'terms', 'type' => 'checkbox'))
         );
     }
 }

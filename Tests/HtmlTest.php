@@ -2,17 +2,19 @@
 
 use Snscripts\HtmlHelper\Html;
 use Snscripts\HtmlHelper\Interfaces;
+use Snscripts\HtmlHelper\Helpers;
 
 class HtmlTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testCanCreateInstance()
     {
         $this->assertInstanceOf(
             'Snscripts\HtmlHelper\Html',
             new Html(
+                new Helpers\Form(
+                    new Interfaces\BasicFormData
+                ),
                 new Interfaces\BasicRouter,
-                new Interfaces\BasicFormData,
                 new Interfaces\BasicAssets
             )
         );
@@ -25,8 +27,10 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
     protected function getHtml()
     {
         return new Html(
+            new Helpers\Form(
+                new Interfaces\BasicFormData
+            ),
             new Interfaces\BasicRouter,
-            new Interfaces\BasicFormData,
             new Interfaces\BasicAssets
         );
     }
@@ -42,6 +46,29 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
             ->setConstructorArgs(array(false, false))
             ->disableOriginalConstructor()
             ->getMock();
+    }
+
+    public function testSettingValidFormObject()
+    {
+        $Html = $this->getHtmlNoConstructor();
+
+        $this->assertTrue(
+            $Html->setForm(
+                new Helpers\Form(
+                    new Interfaces\BasicFormData
+                )
+            )
+        );
+    }
+
+    public function testSettingInvalidFormObjectThrowsException()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $Html = $this->getHtmlNoConstructor();
+
+        $Html->setForm(
+            new \stdClass
+        );
     }
 
     public function testSettingValidAbstractRouter()
@@ -61,28 +88,6 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
         $Html = $this->getHtmlNoConstructor();
 
         $Html->setRouter(
-            new \stdClass
-        );
-    }
-
-
-    public function testSettingValidAbstractFormData()
-    {
-        $Html = $this->getHtmlNoConstructor();
-
-        $this->assertTrue(
-            $Html->setFormData(
-                new Interfaces\BasicFormData
-            )
-        );
-    }
-
-    public function testSettingInvalidAbstractFormDataThrowsException()
-    {
-        $this->setExpectedException('InvalidArgumentException');
-        $Html = $this->getHtmlNoConstructor();
-
-        $Html->setFormData(
             new \stdClass
         );
     }
