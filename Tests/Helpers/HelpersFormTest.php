@@ -351,7 +351,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         $Html = $this->getHtml();
 
         $this->assertSame(
-            '<div class="input checkbox"><input id="_DataReadterms" type="hidden" value="0" name="data[readterms]"><input type="checkbox" id="DataReadterms" value="1" name="data[readterms]"><label for="DataReadterms">Read Terms</label></div>',
+            '<div class="input checkbox"><input type="hidden" id="_DataReadterms" value="0" name="data[readterms]"><input type="checkbox" id="DataReadterms" name="data[readterms]" value="1"><label for="DataReadterms">Read Terms</label></div>',
             $Html->Form->input(
                 'data.readterms',
                 'Read Terms',

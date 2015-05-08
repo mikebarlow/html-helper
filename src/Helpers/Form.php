@@ -13,7 +13,8 @@ class Form
     public $customGenerate = array(
         'textarea',
         'select',
-        'button'
+        'button',
+        'checkbox'
     );
 
     /**
