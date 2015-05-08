@@ -141,6 +141,24 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGenerateCheckboxFieldReturnsValidCheckbox()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<input type="hidden" id="_Readterms" value="0" name="readterms"><input type="checkbox" id="Readterms" name="readterms" value="1">',
+            $Html->Form->generateCheckboxField(
+                array(
+                    'type' => "checkbox",
+                    'id' => 'Readterms',
+                    'name' => 'readterms',
+                    'value' => '1',
+                    'hiddenCheckbox' => true
+                )
+            )
+        );
+    }
+
     public function testTransformNameReturnsCorrectlyFormattedInputName()
     {
         $Html = $this->getHtml();
@@ -251,6 +269,25 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testBuildFieldReturnsItemsInCorrectOrder()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            'prepended text<label for="dataYourEmail">Your Email</label>between text<input type="text" class="required" name="your_email">appended text',
+            $Html->Form->buildField(
+                'text',
+                '<label for="dataYourEmail">Your Email</label>',
+                '<input type="text" class="required" name="your_email">',
+                array(
+                    'before' => 'prepended text',
+                    'between' => 'between text',
+                    'after' => 'appended text'
+                )
+            )
+        );
+    }
+
     public function testInputReturnsValidInputWithLabelAndWrapper()
     {
         $Html = $this->getHtml();
@@ -304,6 +341,22 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                     'wrapper' => false,
                     'class' => 'required',
                     'after' => '<span>Enter Full Name</span>'
+                )
+            )
+        );
+    }
+
+    public function testInputReturnsValidCheckbox()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input checkbox"><input id="_DataReadterms" type="hidden" value="0" name="data[readterms]"><input type="checkbox" id="DataReadterms" value="1" name="data[readterms]"><label for="DataReadterms">Read Terms</label></div>',
+            $Html->Form->input(
+                'data.readterms',
+                'Read Terms',
+                array(
+                    'type' => 'checkbox'
                 )
             )
         );

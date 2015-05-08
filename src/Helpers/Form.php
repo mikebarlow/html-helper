@@ -17,6 +17,18 @@ class Form
     );
 
     /**
+     * order formats for inputs
+     */
+    public $orderFormat = array(
+        'checkbox' => array(
+            'before', 'field', 'between', 'label', 'after'
+        ),
+        'default' => array(
+            'before', 'label', 'between', 'field', 'after'
+        ),
+    );
+
+    /**
      * construct
      * setup the class and store the HTML object
      *
@@ -130,12 +142,7 @@ class Form
         );
 
         // build the contents for the wrapper
-        $contents =
-            $injects['before'] .
-            $label .
-            $injects['between'] .
-            $field .
-            $injects['after'];
+        $contents = $this->buildField($attr['type'], $label, $field, $injects);
 
         // check if they actually want a wrapper
         if (isset($wrapper) && $wrapper === false) {
@@ -153,6 +160,39 @@ class Form
             $contents,
             true
         );
+    }
+
+    /**
+     * build the label / field / injects
+     * format slightly different for checkboxs
+     *
+     * @param   string  the field type
+     * @param   string  label tag / empty string
+     * @param   string  field tag
+     * @param   array   array of the before / between / after injects
+     * @return  string
+     */
+    public function buildField($type, $label, $field, $injects)
+    {
+        $format = $this->orderFormat['default'];
+        if (isset($this->orderFormat[$type])) {
+            $format = $this->orderFormat[$type];
+        }
+
+        $output = '';
+
+        foreach ($format as $item) {
+
+            if ($item == 'label') {
+                $output .= $label;
+            } elseif ($item == 'field') {
+                $output .= $field;
+            } elseif (isset($injects[$item])) {
+                $output .= $injects[$item];
+            }
+        }
+
+        return $output;
     }
 
     /**
@@ -179,6 +219,39 @@ class Form
             return $this->Html->tag('input', $attr);
         }
     }
+
+    /**
+     * generate a checkbox
+     *
+     * @param   array   array of attributes
+     * @return  string
+     */
+    public function generateCheckboxField($attr)
+    {
+        $out = '';
+
+        if ((isset($attr['hiddenCheckbox']) && $attr['hiddenCheckbox']) || ! isset($attr['hiddenCheckbox'])) {
+            $out .= $this->input(
+                $attr['name'],
+                false,
+                array(
+                    'type' => 'hidden',
+                    'wrapper' => false,
+                    'id' => '_' . $attr['id'],
+                    'value' => 0
+                )
+            );
+        }
+        unset($attr['hiddenCheckbox']);
+
+        if (! isset($attr['value'])) {
+            $attr['value'] = 1;
+        }
+
+        $out .= $this->Html->tag('input', $attr);
+        return $out;
+    }
+
 
     /**
      * generate a textarea
