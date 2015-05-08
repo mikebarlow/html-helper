@@ -187,7 +187,6 @@ class Form
         $output = '';
 
         foreach ($format as $item) {
-
             if ($item == 'label') {
                 $output .= $label;
             } elseif ($item == 'field') {

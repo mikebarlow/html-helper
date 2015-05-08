@@ -24,5 +24,4 @@ class BasicFormData implements FormData
 
         return $postData;
     }
-
 }
