@@ -439,4 +439,70 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
             $Html->Form->getPostData(array('name' => 'terms', 'type' => 'checkbox'))
         );
     }
+
+    public function testHiddenReturnsValidHiddenInputElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<input value="22" type="hidden" id="DataUserId" name="data[User][id]">',
+            $Html->Form->hidden('data.User.id', array('value' => 22))
+        );
+    }
+
+    public function testTextareaReturnsValidTextareaElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input textarea"><label for="DataUserBio">Bio</label><textarea cols="10" rows="5" id="DataUserBio" name="data[User][bio]"></textarea></div>',
+            $Html->Form->textarea(
+                'data.User.bio',
+                'Bio',
+                array(
+                    'cols' => 10,
+                    'rows' => 5
+                )
+            )
+        );
+    }
+
+    public function testFileReturnsValidFileElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input file"><label for="DataUserCv">CV</label><input type="file" id="DataUserCv" name="data[User][cv]"></div>',
+            $Html->Form->file(
+                'data.User.cv',
+                'CV'
+            )
+        );
+    }
+
+    public function testSubmitReturnsValidSubmitElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input submit"><input type="submit" value="Login" id="Submit" name="submit"></div>',
+            $Html->Form->submit(
+                'submit',
+                'Login'
+            )
+        );
+    }
+
+    public function testButtonReturnsValidButtonElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input button"><button id="Submit" name="submit">Login</button></div>',
+            $Html->Form->button(
+                'submit',
+                'Login'
+            )
+        );
+    }
 }

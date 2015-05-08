@@ -18,8 +18,8 @@ class Html
      * setup the helper, providing the interfaces
      * for routes/ form data and assets
      *
-     * @param   Object  Instance of an RouterInterface
-     * @param   Object  Instance of an FormDataInterface
+     * @param   Object  Instance of Helpers\Form
+     * @param   Object  Instance of a RouterInterface
      * @param   Object  Instance of an AssetsInterface
      */
     public function __construct(

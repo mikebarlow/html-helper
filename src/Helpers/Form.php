@@ -95,6 +95,160 @@ class Form
     }
 
     /**
+     * shortcut for hidden input field
+     *
+     * @param   string          input name (dot notation for multi-dimensional array)
+     * @param   array           input attributes
+     * @return  string
+     */
+    public function hidden($name, $attr = array())
+    {
+        return $this->input(
+            $name,
+            false,
+            array_merge(
+                $attr,
+                array('type' => 'hidden', 'wrapper' => false)
+            )
+        );
+    }
+
+    /**
+     * shortcut for textarea field
+     *
+     * @param   string          input name (dot notation for multi-dimensional array)
+     * @param   string|array    Label string or array of label value and attributes
+     * @param   array           input attributes
+     * @return  string
+     */
+    public function textarea($name, $label, $attr = array())
+    {
+        return $this->input(
+            $name,
+            $label,
+            array_merge(
+                $attr,
+                array('type' => 'textarea')
+            )
+        );
+    }
+
+    /**
+     * shortcut for file field
+     *
+     * @param   string          input name (dot notation for multi-dimensional array)
+     * @param   string|array    Label string or array of label value and attributes
+     * @param   array           input attributes
+     * @return  string
+     */
+    public function file($name, $label, $attr = array())
+    {
+        return $this->input(
+            $name,
+            $label,
+            array_merge(
+                $attr,
+                array('type' => 'file')
+            )
+        );
+    }
+
+    /**
+     * generate a submit input
+     *
+     * @param   string  dot notation form for input - will match with Input handler and prefill if found
+     * @param   string  label for form, pass false to not show label
+     * @param   array   array of extra options for the input
+     * @return  string  form element
+     */
+    public function submit($name, $label, $attr = array())
+    {
+        return $this->input(
+            $name,
+            false,
+            array_merge(
+                $attr,
+                array(
+                    'type' => 'submit',
+                    'value' => $label
+                )
+            )
+        );
+    }
+
+    /**
+     * generate a button input
+     *
+     * @param   string  dot notation form for input - will match with Input handler and prefill if found
+     * @param   string  label for form, pass false to not show label
+     * @param   array   array of extra options for the input
+     * @return  string  form element
+     */
+    public function button($name, $label, $attr = array())
+    {
+        return $this->input(
+            $name,
+            false,
+            array_merge(
+                $attr,
+                array(
+                    'type' => 'button',
+                    'value' => $label
+                )
+            )
+        );
+    }
+
+    /**
+     * generate a select
+     *
+     * @param   string          input name (dot notation for multi-dimensional array)
+     * @param   string|array    Label string or array of label value and attributes
+     * @param   array           Select Options
+     * @param   array           input attributes
+     * @return  string
+     */
+    public function select($name, $label, $options, $attr = array())
+    {
+        return $this->input(
+            $name,
+            $label,
+            array_merge(
+                $attr,
+                array(
+                    'type' => 'select',
+                    'options' => $options
+                )
+            )
+        );
+    }
+
+    /**
+     * generate a select
+     *
+     * @param   string          input name (dot notation for multi-dimensional array)
+     * @param   string|array    Label string or array of label value and attributes
+     * @param   array           Select Options
+     * @param   array           input attributes
+     * @return  string
+     */
+    public function multiselect($name, $label, $options, $attr = array())
+    {
+        return $this->input(
+            $name,
+            $label,
+            array_merge(
+                $attr,
+                array(
+                    'type' => 'select',
+                    'options' => $options,
+                    'multiple' => true
+                )
+            )
+        );
+    }
+
+    /**
      * generate a complete input with wrapped div and label
      *
      * @param   string          input name (dot notation for multi-dimensional array)
@@ -270,6 +424,7 @@ class Form
      */
     public function generateTextareaField($attr)
     {
+        unset($attr['type']);
         return $this->Html->tag('textarea', $attr, '', true);
     }
 
@@ -286,7 +441,7 @@ class Form
         if (! empty($attr['value'])) {
             $value = $attr['value'];
         }
-        unset($attr['value']);
+        unset($attr['value'], $attr['type']);
 
         return $this->Html->tag('button', $attr, $value, true);
     }
@@ -304,7 +459,7 @@ class Form
         if (! empty($attr['options'])) {
             $options = $attr['options'];
         }
-        unset($attr['options']);
+        unset($attr['options'], $attr['type']);
         $options = $this->generateOptions($options);
 
         return $this->Html->tag('select', $attr, $options, true);
