@@ -545,4 +545,17 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testPasswordReturnsValidPasswordElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input password"><label for="DataUserPass">Password:</label><input type="password" id="DataUserPass" name="data[User][pass]"></div>',
+            $Html->Form->password(
+                'data.User.pass',
+                'Password:'
+            )
+        );
+    }
 }
