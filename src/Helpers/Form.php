@@ -175,6 +175,26 @@ class Form
     }
 
     /**
+     * shortcut for checkbox field
+     *
+     * @param   string          input name (dot notation for multi-dimensional array)
+     * @param   string|array    Label string or array of label value and attributes
+     * @param   array           input attributes
+     * @return  string
+     */
+    public function checkbox($name, $label, $attr = array())
+    {
+        return $this->input(
+            $name,
+            $label,
+            array_merge(
+                $attr,
+                array('type' => 'checkbox')
+            )
+        );
+    }
+
+    /**
      * generate a submit input
      *
      * @param   string  dot notation form for input - will match with Input handler and prefill if found

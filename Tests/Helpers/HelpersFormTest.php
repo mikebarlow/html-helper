@@ -558,4 +558,17 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testCheckboxReturnsValidCheckboxElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input checkbox"><input type="hidden" id="_DataUserReadterms" value="0" name="data[User][readterms]"><input type="checkbox" id="DataUserReadterms" name="data[User][readterms]" value="1"><label for="DataUserReadterms">I have read and agree to the terms</label></div>',
+            $Html->Form->checkbox(
+                'data.User.readterms',
+                'I have read and agree to the terms'
+            )
+        );
+    }
 }
