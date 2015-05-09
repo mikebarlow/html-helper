@@ -422,12 +422,12 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             array(
-                'name' => 'User.email',
+                'name' => 'User[email]',
                 'type' => 'text',
                 'class' => 'required',
                 'value' => 'john@example.com'
             ),
-            $Html->Form->getPostData(array('name' => 'User.email', 'type' => 'text', 'class' => 'required'))
+            $Html->Form->getPostData('User.email', array('name' => 'User[email]', 'type' => 'text', 'class' => 'required'))
         );
 
         $this->assertSame(
@@ -436,7 +436,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 'type' => 'checkbox',
                 'checked' => 1
             ),
-            $Html->Form->getPostData(array('name' => 'terms', 'type' => 'checkbox'))
+            $Html->Form->getPostData('terms', array('name' => 'terms', 'type' => 'checkbox'))
         );
     }
 
@@ -502,6 +502,26 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
             $Html->Form->button(
                 'submit',
                 'Login'
+            )
+        );
+    }
+
+    public function testSelectReturnsValidSelectElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input select"><label for="DataUserTitle">Title</label><select class="title" name="data[User][title]" id="DataUserTitle"><option value="mr">Mr</option><option value="mrs">Mrs</option></select></div>',
+            $Html->Form->select(
+                'data.User.title',
+                'Title',
+                array(
+                    'mr' => 'Mr',
+                    'mrs' => 'Mrs'
+                ),
+                array(
+                    'class' => 'title'
+                )
             )
         );
     }

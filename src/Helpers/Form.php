@@ -242,7 +242,7 @@ class Form
                 array(
                     'type' => 'select',
                     'options' => $options,
-                    'multiple' => true
+                    'multiple'
                 )
             )
         );
@@ -296,7 +296,7 @@ class Form
         }
 
         $field = $this->generateField(
-            $this->transformName($name),
+            $name,
             $attr
         );
 
@@ -367,9 +367,9 @@ class Form
         if (in_array($attr['type'], $this->customGenerate)) {
             $tag = $attr['type'];
         }
-        $attr['name'] = $name;
+        $attr['name'] =$this->transformName($name);
 
-        $attr = $this->getPostData($attr);
+        $attr = $this->getPostData($name, $attr);
 
         if ($tag !== 'input') {
             $generate = 'generate' . ucfirst(strtolower($tag)) . 'Field';
@@ -596,16 +596,17 @@ class Form
     /**
      * use the FormData interface and find any post data
      *
+     * @param   string          input name (dot notation for multi-dimensional array)
      * @param   array   Array of attributes for the tag
      * @return  array   Return the attribute array with added post data
      */
-    public function getPostData($attr)
+    public function getPostData($name, $attr)
     {
-        if (empty($attr['name'])) {
+        if (empty($name)) {
             return $attr;
         }
 
-        $value = $this->FormData->getValue($attr['name']);
+        $value = $this->FormData->getValue($name);
 
         if ($value !== null) {
             $isCheckbox = (isset($attr['type']) && $attr['type'] == 'checkbox');
@@ -613,7 +614,7 @@ class Form
             $isSelect = (isset($attr['type']) && $attr['type'] == 'select');
 
             if ($isCheckbox || $isRadio) {
-                $attr['checked'] = $value;
+                $attr[] = 'checked';
             } elseif ($isSelect) {
                 $attr['selected'] = $value;
             } else {
