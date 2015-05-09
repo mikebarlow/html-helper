@@ -434,7 +434,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
             array(
                 'name' => 'terms',
                 'type' => 'checkbox',
-                'checked' => 1
+                'checked'
             ),
             $Html->Form->getPostData('terms', array('name' => 'terms', 'type' => 'checkbox'))
         );
@@ -511,8 +511,28 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         $Html = $this->getHtml();
 
         $this->assertSame(
-            '<div class="input select"><label for="DataUserTitle">Title</label><select class="title" name="data[User][title]" id="DataUserTitle"><option value="mr">Mr</option><option value="mrs">Mrs</option></select></div>',
+            '<div class="input select"><label for="DataUserTitle">Title</label><select class="title" id="DataUserTitle" name="data[User][title]"><option value="mr">Mr</option><option value="mrs">Mrs</option></select></div>',
             $Html->Form->select(
+                'data.User.title',
+                'Title',
+                array(
+                    'mr' => 'Mr',
+                    'mrs' => 'Mrs'
+                ),
+                array(
+                    'class' => 'title'
+                )
+            )
+        );
+    }
+
+    public function testMultiSelectReturnsValidSelectElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input select multiselect"><label for="DataUserTitle">Title</label><select class="title" multiple id="DataUserTitle" name="data[User][title]"><option value="mr">Mr</option><option value="mrs">Mrs</option></select></div>',
+            $Html->Form->multiselect(
                 'data.User.title',
                 'Title',
                 array(

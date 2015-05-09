@@ -17,6 +17,7 @@ class Form
     public $customGenerate = array(
         'textarea',
         'select',
+        'multiselect',
         'button',
         'checkbox'
     );
@@ -466,6 +467,17 @@ class Form
     }
 
     /**
+     * generate a multiselect field, just wrap around select field
+     *
+     * @param   array   array of attributes
+     * @return  string
+     */
+    public function generateMultiselectField($attr)
+    {
+        return $this->generateSelectField($attr);
+    }
+
+    /**
      * generate the options for a select box
      *
      * @param   array   array of options
@@ -571,6 +583,10 @@ class Form
         $type = '';
         if (! empty($attr['type'])) {
             $type = ' ' . $attr['type'];
+
+            if ((isset($attr['type']) && $attr['type'] == 'select') && in_array('multiple', $attr)) {
+                $type .= ' multiselect';
+            }
         }
 
         $defaults = array(
