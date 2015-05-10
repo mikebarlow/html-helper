@@ -528,14 +528,27 @@ class Form
         $return = '';
 
         foreach ($options as $key => $value) {
-            $return .= $this->Html->tag(
-                'option',
-                array(
-                    'value' => $key
-                ),
-                $value,
-                true
-            );
+            if (is_array($value)) {
+                $subArray = $this->generateOptions($value);
+
+                $return .= $this->Html->tag(
+                    'optgroup',
+                    array(
+                        'label' => $key
+                    ),
+                    $subArray,
+                    true
+                );
+            } else {
+                $return .= $this->Html->tag(
+                    'option',
+                    array(
+                        'value' => $key
+                    ),
+                    $value,
+                    true
+                );
+            }
         }
 
         return $return;

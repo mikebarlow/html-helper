@@ -135,6 +135,20 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 )
             )
         );
+
+        $this->assertSame(
+            '<option value="test1">Test One</option><option value="test2">Test Two</option><optgroup label="OptGrp1"><option value="subtest1">Sub Test 1</option><option value="subtest2">Sub Test 2</option></optgroup>',
+            $Html->Form->generateOptions(
+                array(
+                    'test1' => 'Test One',
+                    'test2' => 'Test Two',
+                    'OptGrp1' => array(
+                        'subtest1' => 'Sub Test 1',
+                        'subtest2' => 'Sub Test 2'
+                    ),
+                )
+            )
+        );
     }
 
     public function testGenerateTextareaFieldReturnsValidTextarea()
