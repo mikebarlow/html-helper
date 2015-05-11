@@ -1,6 +1,6 @@
 <?php
 
-class InterfacesBasicFormData extends \PHPUnit_Framework_TestCase
+class BasicFormDataTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreateInstance()
     {

@@ -44,7 +44,7 @@ class Html
      * @param   string      tag to render
      * @param   array       attributes for the tag
      * @param   string      contents of tag when not self closing
-     * @param   bool        self-close the tag?
+     * @param   bool        close the tag?
      * @return  string
      */
     public function tag($tag, $attr = null, $content = null, $close = false)

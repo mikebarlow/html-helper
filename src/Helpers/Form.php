@@ -433,7 +433,7 @@ class Form
         if (in_array($attr['type'], $this->customGenerate)) {
             $tag = $attr['type'];
         }
-        $attr['name'] =$this->transformName($name);
+        $attr['name'] = $this->transformName($name);
 
         $attr = $this->getPostData($name, $attr);
 
