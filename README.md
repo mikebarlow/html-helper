@@ -151,10 +151,11 @@ That simple method powers the Html Helper, with all the other methods and helper
 	// create an input
 	// This will create full input element wrapped in a div tag with it's own label
 	$Html->Form->input(
-		'dot.notation.input.name', // translates to $_POST['dot']['notation']['input']['name']
+		'dot.notation.input.name', 
+		// translates to $_POST['dot']['notation']['input']['name']
 		'Inputs Label',
 		array(
-			'type' => 'text', // see below for full list of options
+			'type' => 'text',
 			'class' => 'myInput'
 		)
 	);
@@ -174,7 +175,11 @@ That simple method powers the Html Helper, with all the other methods and helper
 	$Html->Form->file('user.cv', 'CV', array('class' => 'required'));
 	
 	// create a checkbox
-	$Html->Form->checkbox('read_terms', 'Read and agree to terms', array('onclick' => 'someJs();'));
+	$Html->Form->checkbox(
+		'read_terms', 
+		'Read and agree to terms', 
+		array('onclick' => 'someJs()')
+	);
 	
 	// create a selection of radio options
 	$Html->Form->radio(
@@ -219,7 +224,11 @@ That simple method powers the Html Helper, with all the other methods and helper
 	$Html->Form->submit('submit', 'Log Me In!', array('class' => 'btn'));
 	
 	// create a standard button
-	$Html->Form->button('someAction', 'Perform Actions', array('class' => 'btn btn-danger'));
+	$Html->Form->button(
+		'someAction', 
+		'Perform Actions', 
+		array('class' => 'btn btn-danger')
+	);
 	
 ## Advanced 
 
@@ -257,11 +266,11 @@ This will also work for `ol` lists!
 
 ### Form Open Tag
 
-The open method can accept 3 different values for the first parameter which sets the form method. The standard `post` and `get` are 2 of the 3. The third is `file`. Defining this will set the action to `post` and also define `$attr['enctype'] = 'multipart/form-data';`.
+The open method can accept 3 different values for the first parameter which sets the form method. The standard `post` and `get` are 2 of the 3. The 3rd is `file`. Defining this will set the action to `post` and also define `$attr['enctype'] = 'multipart/form-data';`.
 
 ### Form Inputs
 
-All the shortcut wrappers for different input types are all available via the default `input` method and by defining the `type` attribute in the attributes array. Other input types are available just by setting this type value, such as the HTML5 elements like `email`, `range` and `datetime` but no shortcut wrappers have been created.
+All the shortcut wrappers simply call the input method and override the `type` attribute in the attributes array. Other input types are available just by setting this type value, such as the HTML5 elements like `email`, `range` and `datetime` but no shortcut wrappers have been created.
 
 The html structure the input method will return will be something like:
 
@@ -276,7 +285,7 @@ Checkboxes as default will return a hidden input which is placed before the actu
 
 	<div class="input checkbox">
 		<input type="hidden" id="_DataReadterms" value="0" name="data[readterms]">
-		<input type="checkbox" id="DataReadterms" name="data[readterms]" checked="" value="1">
+		<input type="checkbox" id="DataReadterms" name="data[readterms]" value="1">
 		<label for="DataReadterms">Read the Terms?</label>
 	</div>
 
