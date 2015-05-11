@@ -2,7 +2,7 @@
 <phpunit colors="true" bootstrap="vendor/autoload.php">
     <testsuites>
         <testsuite name="SNScript\Html-Helper Tests">
-            <directory>tests/</directory>
+            <directory>Tests/</directory>
         </testsuite>
     </testsuites>
     <filter>
