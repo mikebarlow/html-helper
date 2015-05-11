@@ -91,6 +91,22 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testOpenReturnsAsPostWhenInvalidMethodSet()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<form class="avatar" method="post" action="upload.php">',
+            $Html->Form->open(
+                'foobar',
+                'upload.php',
+                array(
+                    'class' => 'avatar'
+                )
+            )
+        );
+    }
+
     public function testCloseReturnsValidElement()
     {
         $Html = $this->getHtml();
@@ -179,6 +195,20 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGenerateTextareaReturnsEmptyWhenNoNameIsPassed()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertEmpty(
+            $Html->Form->generateTextareaField(
+                array(
+                    'cols' => '10',
+                    'rows' => '5'
+                )
+            )
+        );
+    }
+
     public function testGenerateButtonFieldReturnsValidButton()
     {
         $Html = $this->getHtml();
@@ -214,6 +244,43 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGenerateSelectReturnsEmptyWhenNoNameIsPassed()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertEmpty(
+            $Html->Form->generateSelectField(
+                array(
+                    'class' => 'title',
+                    'options' => array(
+                        'mr' => 'Mr',
+                        'mrs' => 'Mrs'
+                    )
+                )
+            )
+        );
+    }
+
+    public function testGenerateMultiselectFieldReturnsValidSelect()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<select class="title" name="title" multiple><option value="mr">Mr</option><option value="mrs">Mrs</option></select>',
+            $Html->Form->generateMultiselectField(
+                array(
+                    'class' => 'title',
+                    'name' => 'title',
+                    'options' => array(
+                        'mr' => 'Mr',
+                        'mrs' => 'Mrs'
+                    ),
+                    'multiple'
+                )
+            )
+        );
+    }
+
     public function testGenerateCheckboxFieldReturnsValidCheckbox()
     {
         $Html = $this->getHtml();
@@ -231,6 +298,63 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testGenerateCheckboxReturnsEmptyWhenNoNameIsPassed()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertEmpty(
+            $Html->Form->generateCheckboxField(
+                array(
+                    'type' => "checkbox",
+                    'id' => 'Readterms',
+                    'value' => '1',
+                    'hiddenCheckbox' => true
+                )
+            )
+        );
+    }
+
+    public function testGenerateRadioFieldReturnsValidRadio()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="radio-item"><input type="radio" id="DataUserPlan_basic" name="data[User][plan]" value="basic"><label for="DataUserPlan_basic">Basic Plan</label></div><div class="radio-item"><input type="radio" id="DataUserPlan_midlevel" name="data[User][plan]" value="midlevel"><label for="DataUserPlan_midlevel">Intermediate</label></div><div class="radio-item"><input type="radio" id="DataUserPlan_advanced" name="data[User][plan]" value="advanced"><label for="DataUserPlan_advanced">Advanced Plan!</label></div>',
+            $Html->Form->generateRadioField(
+                array(
+                    'type' => "radio",
+                    'id' => 'DataUserPlan',
+                    'name' => 'data[User][plan]',
+                    'options' => array(
+                        'basic' => 'Basic Plan',
+                        'midlevel' => 'Intermediate',
+                        'advanced' => 'Advanced Plan!'
+                    )
+                )
+            )
+        );
+    }
+
+    public function testGenerateRadioReturnsEmptyWhenNoNameIsPassed()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertEmpty(
+            $Html->Form->generateRadioField(
+                array(
+                    'type' => "radio",
+                    'id' => 'Plan',
+                    'options' => array(
+                        'basic' => 'Basic Plan',
+                        'midlevel' => 'Intermediate',
+                        'advanced' => 'Advanced Plan!'
+                    )
+                )
+            )
+        );
+    }
+
 
     public function testTransformNameReturnsCorrectlyFormattedInputName()
     {
@@ -397,6 +521,29 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testInputCanAcceptLabelAsArray()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input text" id="YourName"><label class="name-lbl" for="DataUserName">Your Name</label><input class="required" id="DataUserName" type="text" name="data[User][name]"><span>Enter Full Name</span></div>',
+            $Html->Form->input(
+                'data.User.name',
+                array(
+                    'value' => 'Your Name',
+                    'class' => 'name-lbl'
+                ),
+                array(
+                    'wrapper' => array(
+                        'id' => 'YourName'
+                    ),
+                    'class' => 'required',
+                    'after' => '<span>Enter Full Name</span>'
+                )
+            )
+        );
+    }
+
     public function testInputCanTurnOffLabels()
     {
         $Html = $this->getHtml();
@@ -489,6 +636,15 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 'selected' => 'advanced'
             ),
             $Html->Form->getPostData('User.plan', array('name' => 'User[plan]', 'type' => 'select'))
+        );
+
+        $this->assertSame(
+            array(
+                'name' => 'User[plan]',
+                'type' => 'radio',
+                'checked' => 'advanced'
+            ),
+            $Html->Form->getPostData('User.plan', array('name' => 'User[plan]', 'type' => 'radio'))
         );
     }
 
@@ -678,6 +834,26 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             '<div class="input radio"><label for="DataUserPlan">Membership Plan</label><div class="radio-item"><input type="radio" id="DataUserPlan_basic" name="data[User][plan]" value="basic"><label for="DataUserPlan_basic">Basic Plan</label></div><div class="radio-item"><input type="radio" id="DataUserPlan_midlevel" name="data[User][plan]" value="midlevel"><label for="DataUserPlan_midlevel">Intermediate</label></div><div class="radio-item"><input type="radio" id="DataUserPlan_advanced" name="data[User][plan]" value="advanced"><label for="DataUserPlan_advanced">Advanced Plan!</label></div></div>',
+            $Html->Form->radio(
+                'data.User.plan',
+                'Membership Plan',
+                array(
+                    'basic' => 'Basic Plan',
+                    'midlevel' => 'Intermediate',
+                    'advanced' => 'Advanced Plan!'
+                )
+            )
+        );
+    }
+
+    public function testRadioReturnsValidRadioElementWithPreCheckedItem()
+    {
+        $Html = $this->getHtml();
+
+        $_POST['data']['User']['plan'] = 'midlevel';
+
+        $this->assertSame(
+            '<div class="input radio"><label for="DataUserPlan">Membership Plan</label><div class="radio-item"><input type="radio" id="DataUserPlan_basic" name="data[User][plan]" value="basic"><label for="DataUserPlan_basic">Basic Plan</label></div><div class="radio-item"><input type="radio" id="DataUserPlan_midlevel" name="data[User][plan]" value="midlevel" checked><label for="DataUserPlan_midlevel">Intermediate</label></div><div class="radio-item"><input type="radio" id="DataUserPlan_advanced" name="data[User][plan]" value="advanced"><label for="DataUserPlan_advanced">Advanced Plan!</label></div></div>',
             $Html->Form->radio(
                 'data.User.plan',
                 'Membership Plan',

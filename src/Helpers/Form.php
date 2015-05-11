@@ -453,21 +453,35 @@ class Form
      */
     public function generateRadioField($attr)
     {
-        if (empty($attr['options'])) {
+        if (empty($attr['name'])) {
             return '';
         }
 
         $out = '';
-        $options = $attr['options'];
-        unset($attr['options']);
+
+        $options = array();
+        if (! empty($attr['options'])) {
+            $options = $attr['options'];
+        }
+
+        if (isset($attr['checked'])) {
+            $checkedItem = $attr['checked'];
+        }
+
+        unset($attr['options'], $attr['checked']);
 
         foreach ($options as $value => $label) {
             $id = $attr['id'] . '_' . $value;
+
+            $optionsAttr = array('id' => $id, 'value' => $value);
+            if (isset($checkedItem) && $checkedItem == $value) {
+                $optionsAttr[] = 'checked';
+            }
             $input = $this->Html->tag(
                 'input',
                 array_merge(
                     $attr,
-                    array('id' => $id, 'value' => $value)
+                    $optionsAttr
                 )
             );
 
@@ -536,6 +550,10 @@ class Form
      */
     public function generateTextareaField($attr)
     {
+        if (empty($attr['name'])) {
+            return '';
+        }
+
         unset($attr['type']);
         return $this->Html->tag('textarea', $attr, '', true);
     }
@@ -566,6 +584,10 @@ class Form
      */
     public function generateSelectField($attr)
     {
+        if (empty($attr['name'])) {
+            return '';
+        }
+
         $options = array();
 
         if (! empty($attr['options'])) {
