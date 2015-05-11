@@ -571,8 +571,9 @@ class Form
         if (! empty($attr['options'])) {
             $options = $attr['options'];
         }
-        unset($attr['options'], $attr['type']);
-        $options = $this->generateSelectOptions($options);
+        $options = $this->generateSelectOptions($options, $attr);
+
+        unset($attr['options'], $attr['type'], $attr['selected']);
 
         return $this->Html->tag('select', $attr, $options, true);
     }
@@ -592,15 +593,16 @@ class Form
      * generate the options for a select box
      *
      * @param   array   array of options
+     * @param   array   array of attributes
      * @return  string
      */
-    public function generateSelectOptions($options)
+    public function generateSelectOptions($options, $attr)
     {
         $return = '';
 
         foreach ($options as $key => $value) {
             if (is_array($value)) {
-                $subArray = $this->generateSelectOptions($value);
+                $subArray = $this->generateSelectOptions($value, $attr);
 
                 $return .= $this->Html->tag(
                     'optgroup',
@@ -611,11 +613,15 @@ class Form
                     true
                 );
             } else {
+                $optionsAttr = array('value' => $key);
+
+                if (isset($attr['selected']) && $attr['selected'] == $key) {
+                    $optionsAttr[] = 'selected';
+                }
+
                 $return .= $this->Html->tag(
                     'option',
-                    array(
-                        'value' => $key
-                    ),
+                    $optionsAttr,
                     $value,
                     true
                 );
@@ -753,8 +759,10 @@ class Form
             $isRadio = (isset($attr['type']) && $attr['type'] == 'radio');
             $isSelect = (isset($attr['type']) && $attr['type'] == 'select');
 
-            if ($isCheckbox || $isRadio) {
+            if ($isCheckbox) {
                 $attr[] = 'checked';
+            } elseif ($isRadio) {
+                $attr['checked'] = $value;
             } elseif ($isSelect) {
                 $attr['selected'] = $value;
             } else {

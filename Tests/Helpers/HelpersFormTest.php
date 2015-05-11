@@ -142,7 +142,8 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 array(
                     'test1' => 'Test One',
                     'test2' => 'Test Two'
-                )
+                ),
+                array() // input attributes to checked for selected option
             )
         );
 
@@ -156,7 +157,8 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                         'subtest1' => 'Sub Test 1',
                         'subtest2' => 'Sub Test 2'
                     ),
-                )
+                ),
+                array() // input attributes to checked for selected option
             )
         );
     }
@@ -593,6 +595,23 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             '<div class="input select"><label for="DataUserTitle">Title</label><select class="title" id="DataUserTitle" name="data[User][title]"><option value="mr">Mr</option><option value="mrs">Mrs</option></select></div>',
+            $Html->Form->select(
+                'data.User.title',
+                'Title',
+                array(
+                    'mr' => 'Mr',
+                    'mrs' => 'Mrs'
+                ),
+                array(
+                    'class' => 'title'
+                )
+            )
+        );
+
+        $_POST['data']['User']['title'] = 'mrs';
+
+        $this->assertSame(
+            '<div class="input select"><label for="DataUserTitle">Title</label><select class="title" id="DataUserTitle" name="data[User][title]"><option value="mr">Mr</option><option value="mrs" selected>Mrs</option></select></div>',
             $Html->Form->select(
                 'data.User.title',
                 'Title',
