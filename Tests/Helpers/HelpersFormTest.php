@@ -65,6 +65,16 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testSettingInvalidHtmlObjectsThrowsException()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $Form = $this->getFormNoConstructor();
+
+        $Form->setHtml(
+            new \stdClass
+        );
+    }
+
     public function testOpenReturnsValidElement()
     {
         $Html = $this->getHtml();
@@ -288,6 +298,22 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
             ),
             $attr
         );
+
+        $attr = array(
+            'type' => 'text',
+            'before' => '&pound;',
+            'class' => 'amount',
+            'between' => '.',
+            'after' => 'pence'
+        );
+        $this->assertSame(
+            array(
+                'before' => '&pound;',
+                'between' => '.',
+                'after' => 'pence'
+            ),
+            $Html->Form->getInjects($attr)
+        );
     }
 
     public function testGetWrapperReturnsCorrectArray()
@@ -429,7 +455,8 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
 
         $_POST = array(
             'User' => array(
-                'email' => 'john@example.com'
+                'email' => 'john@example.com',
+                'plan' => 'advanced'
             ),
             'terms' => 1
         );
@@ -451,6 +478,46 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 'checked'
             ),
             $Html->Form->getPostData('terms', array('name' => 'terms', 'type' => 'checkbox'))
+        );
+
+        $this->assertSame(
+            array(
+                'name' => 'User[plan]',
+                'type' => 'select',
+                'selected' => 'advanced'
+            ),
+            $Html->Form->getPostData('User.plan', array('name' => 'User[plan]', 'type' => 'select'))
+        );
+    }
+
+    public function testGetPostDataReturnsSameArrayWithNoNameSetOrNotDataFound()
+    {
+        $Html = $this->getHtml();
+
+        $_POST = array(
+            'User' => array(
+                'my_email' => 'john@example.com',
+                'plan' => 'advanced'
+            ),
+            'terms' => 1
+        );
+
+        $this->assertSame(
+            array(
+                'name' => 'User[email]',
+                'type' => 'text',
+                'class' => 'required'
+            ),
+            $Html->Form->getPostData(null, array('name' => 'User[email]', 'type' => 'text', 'class' => 'required'))
+        );
+
+        $this->assertSame(
+            array(
+                'name' => 'User[email]',
+                'type' => 'text',
+                'class' => 'required'
+            ),
+            $Html->Form->getPostData('User.email', array('name' => 'User[email]', 'type' => 'text', 'class' => 'required'))
         );
     }
 
