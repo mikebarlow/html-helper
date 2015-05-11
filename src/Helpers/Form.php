@@ -19,7 +19,8 @@ class Form
         'select',
         'multiselect',
         'button',
-        'checkbox'
+        'checkbox',
+        'radio'
     );
 
     /**
@@ -265,6 +266,30 @@ class Form
     }
 
     /**
+     * generate a group of radio buttons
+     *
+     * @param   string          input name (dot notation for multi-dimensional array)
+     * @param   string|array    Label string or array of label value and attributes
+     * @param   array           radio Options
+     * @param   array           input attributes
+     * @return  string
+     */
+    public function radio($name, $label, $options, $attr = array())
+    {
+        return $this->input(
+            $name,
+            $label,
+            array_merge(
+                $attr,
+                array(
+                    'type' => 'radio',
+                    'options' => $options
+                )
+            )
+        );
+    }
+
+    /**
      * generate a select
      *
      * @param   string          input name (dot notation for multi-dimensional array)
@@ -421,6 +446,52 @@ class Form
     }
 
     /**
+     * generate a selection of radio buttons
+     *
+     * @param   array   array of attributes
+     * @return  string
+     */
+    public function generateRadioField($attr)
+    {
+        if (empty($attr['options'])) {
+            return '';
+        }
+
+        $out = '';
+        $options = $attr['options'];
+        unset($attr['options']);
+
+        foreach ($options as $value => $label) {
+            $id = $attr['id'] . '_' . $value;
+            $input = $this->Html->tag(
+                'input',
+                array_merge(
+                    $attr,
+                    array('id' => $id, 'value' => $value)
+                )
+            );
+
+            $label = $this->Html->tag(
+                'label',
+                array('for' => $id),
+                $label,
+                true
+            );
+
+            $out .= $this->Html->tag(
+                'div',
+                array(
+                    'class' => 'radio-item'
+                ),
+                $input . $label,
+                true
+            );
+        }
+
+        return $out;
+    }
+
+    /**
      * generate a checkbox
      *
      * @param   array   array of attributes
@@ -501,7 +572,7 @@ class Form
             $options = $attr['options'];
         }
         unset($attr['options'], $attr['type']);
-        $options = $this->generateOptions($options);
+        $options = $this->generateSelectOptions($options);
 
         return $this->Html->tag('select', $attr, $options, true);
     }
@@ -523,13 +594,13 @@ class Form
      * @param   array   array of options
      * @return  string
      */
-    public function generateOptions($options)
+    public function generateSelectOptions($options)
     {
         $return = '';
 
         foreach ($options as $key => $value) {
             if (is_array($value)) {
-                $subArray = $this->generateOptions($value);
+                $subArray = $this->generateSelectOptions($value);
 
                 $return .= $this->Html->tag(
                     'optgroup',

@@ -128,7 +128,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             '<option value="test1">Test One</option><option value="test2">Test Two</option>',
-            $Html->Form->generateOptions(
+            $Html->Form->generateSelectOptions(
                 array(
                     'test1' => 'Test One',
                     'test2' => 'Test Two'
@@ -138,7 +138,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             '<option value="test1">Test One</option><option value="test2">Test Two</option><optgroup label="OptGrp1"><option value="subtest1">Sub Test 1</option><option value="subtest2">Sub Test 2</option></optgroup>',
-            $Html->Form->generateOptions(
+            $Html->Form->generateSelectOptions(
                 array(
                     'test1' => 'Test One',
                     'test2' => 'Test Two',
@@ -582,6 +582,24 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
             $Html->Form->checkbox(
                 'data.User.readterms',
                 'I have read and agree to the terms'
+            )
+        );
+    }
+
+    public function testRadioReturnsValidRadioElement()
+    {
+        $Html = $this->getHtml();
+
+        $this->assertSame(
+            '<div class="input radio"><label for="DataUserPlan">Membership Plan</label><div class="radio-item"><input type="radio" id="DataUserPlan_basic" name="data[User][plan]" value="basic"><label for="DataUserPlan_basic">Basic Plan</label></div><div class="radio-item"><input type="radio" id="DataUserPlan_midlevel" name="data[User][plan]" value="midlevel"><label for="DataUserPlan_midlevel">Intermediate</label></div><div class="radio-item"><input type="radio" id="DataUserPlan_advanced" name="data[User][plan]" value="advanced"><label for="DataUserPlan_advanced">Advanced Plan!</label></div></div>',
+            $Html->Form->radio(
+                'data.User.plan',
+                'Membership Plan',
+                array(
+                    'basic' => 'Basic Plan',
+                    'midlevel' => 'Intermediate',
+                    'advanced' => 'Advanced Plan!'
+                )
             )
         );
     }
