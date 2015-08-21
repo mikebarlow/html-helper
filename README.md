@@ -12,13 +12,11 @@ This Html Helper is a PSR-2 Compliant Framework Agnostic helper designed for use
 
 ## Requirements
 
-### Composer 
+### Composer
 
 HTML Helper requires the following:
 
 * "php": ">=5.4.0"
-* "snscripts/html-attributes": "~1.0"
-	* A fork of [RobinDev/platesAttributes](https://github.com/RobinDev/platesAttributes) to remove the Plates Dependency.
 
 And the following if you wish to run in dev mode and run tests.
 
@@ -32,7 +30,7 @@ And the following if you wish to run in dev mode and run tests.
 Simplest installation is via composer.
 
 	composer require snscripts/html-helper 1.*
-	
+
 or adding to your projects `composer.json` file.
 
 	{
@@ -40,7 +38,7 @@ or adding to your projects `composer.json` file.
 	        "snscripts/html-helper": "1.*"
 	    }
 	}
-	
+
 ### Setup
 
 Setup the helper as follows:
@@ -55,7 +53,7 @@ Setup the helper as follows:
 
 The main object, is the Html object which contains the skeleton of the helper with the `tag()` method which is used to generate a html tag given a set of parameters. It also contains shortcut methods for certain html elements (For the list of available tags, see below).
 
-The first parameter, is the Form Object which contains all the methods needed to create and populate a HTML form. The Form Object requires an instance of `\Snscripts\HtmlHelper\Interfaces\FormData` which `BasicFormData` implements. 
+The first parameter, is the Form Object which contains all the methods needed to create and populate a HTML form. The Form Object requires an instance of `\Snscripts\HtmlHelper\Interfaces\FormData` which `BasicFormData` implements.
 
 The second and third parameters should also be instances of `\Snscripts\HtmlHelper\Interfaces\Router` and `\Snscripts\HtmlHelper\Interfaces\Assets` which `BasicRouter` and `BasicAssets` implement respectively.
 
@@ -89,8 +87,8 @@ Assuming we've setup the object as above, the most basic method to be called is:
 And can be called like so:
 
 	$Html->tag('div', array('class' => 'myDiv'), 'Div Contents', true);
-	
-As the DocBlock shows, the first parameter is the tag that you wish to render. 
+
+As the DocBlock shows, the first parameter is the tag that you wish to render.
 
 The second parameter should be a associate array containing any attributes to be placed on the tag.
 
@@ -99,7 +97,7 @@ The third parameter (if required) should be the contents of the tag, this is onl
 An example of a self closing tag would be:
 
 	$Html->tag('input', array('type' => 'text', 'name' => 'my_name'));
-	
+
 That would generate a simple text input box.
 
 That simple method powers the Html Helper, with all the other methods and helpers there to simply make life easier! See below for list of methods available.
@@ -108,50 +106,50 @@ That simple method powers the Html Helper, with all the other methods and helper
 
 	// create a div tag
 	$Html->div('Div Contents Here', array('class' => 'attributes'));
-	
+
 	// create a p tag
 	$Html->p('Paragraph contents', array('id' => 'intro'));
-	
+
 	// create a ul list
 	// See the list section for more examples
 	$Html->ul(array('this', 'is', 'a', 'list'), array('data-foo' => 'bar'));
-	
+
 	// create an ol list
 	// See the list section for more examples
 	$Html->ol(array('this', 'is', 'a', 'list'), array('data-foo' => 'bar'));
-	
+
 	// create a hyperlink
 	// The second param will be passed to RouterInterface::getUrl
 	$Html->link('My Link', '/pages/about-us', array('target' => '_blank'));
-	
+
 	// create an image
 	// the first param will be passed to AssetsInterface::getImage
 	$Html->image('/assets/img/logo.png', array('alt' => 'Our Logo'));
-	
+
 	// create a stylesheet link
 	// the first param will be passed to AssetsInterface::getStyle
 	$Html->style('/assets/css/print.css', array('media' => 'print'));
-	
+
 	// create a script tag
 	// the first param will be passed to AssetsInterface::getScript
 	$Html->script('/assets/js/validate.js');
-	
+
 ## Available Form Methods
 
 	// Open the form
 	// See form section below for more info
 	$Html->Form->open('post', '/search', array('class' => 'validate'));
-	
+
 	// close the form
 	$Html->Form->close();
-	
+
 	// create a label
 	$Html->Form->label('My Label', array('for' => 'InputID'));
-	
+
 	// create an input
 	// This will create full input element wrapped in a div tag with it's own label
 	$Html->Form->input(
-		'dot.notation.input.name', 
+		'dot.notation.input.name',
 		// translates to $_POST['dot']['notation']['input']['name']
 		'Inputs Label',
 		array(
@@ -159,28 +157,28 @@ That simple method powers the Html Helper, with all the other methods and helper
 			'class' => 'myInput'
 		)
 	);
-	
+
 	// The following simply wrap the input method above and override the 'type' attribute
-	
+
 	// create a hidden field
 	$Html->Form->hidden('hidden.field', array('value' => 'foobar'));
-	
+
 	// create a password field
 	$Html->Form->password('user.password', 'Your Password', array('class' => 'required'));
-	
+
 	// create a textarea
 	$Html->Form->textarea('user.bio', 'Bio', array('cols' => 10, 'rows' => 5));
-	
+
 	// create a file input
 	$Html->Form->file('user.cv', 'CV', array('class' => 'required'));
-	
+
 	// create a checkbox
 	$Html->Form->checkbox(
-		'read_terms', 
-		'Read and agree to terms', 
+		'read_terms',
+		'Read and agree to terms',
 		array('onclick' => 'someJs()')
 	);
-	
+
 	// create a selection of radio options
 	$Html->Form->radio(
 		'user.plan',
@@ -193,7 +191,7 @@ That simple method powers the Html Helper, with all the other methods and helper
 			'class' => 'radio-options'
 		)
 	);
-	
+
 	// Or can do the same as above with a select box
 	$Html->Form->select(
 		'user.plan',
@@ -205,8 +203,8 @@ That simple method powers the Html Helper, with all the other methods and helper
 		array(
 			'class' => 'select-box'
 		)
-	);	
-	
+	);
+
 	// create a multi select box
 	$Html->Form->multiselect(
 		'user.plan',
@@ -218,19 +216,19 @@ That simple method powers the Html Helper, with all the other methods and helper
 		array(
 			'class' => 'select-all-the-plans'
 		)
-	);	
-	
+	);
+
 	// create a submit button
 	$Html->Form->submit('submit', 'Log Me In!', array('class' => 'btn'));
-	
+
 	// create a standard button
 	$Html->Form->button(
-		'someAction', 
-		'Perform Actions', 
+		'someAction',
+		'Perform Actions',
 		array('class' => 'btn btn-danger')
 	);
-	
-## Advanced 
+
+## Advanced
 
 ### Lists
 
@@ -278,8 +276,8 @@ The html structure the input method will return will be something like:
 		<label for="DataUserName">Name:</label>
 		<input id="DataUserName" type="text" name="data[User][name]">
 	</div>
-	
-#### Checkboxes 
+
+#### Checkboxes
 
 Checkboxes as default will return a hidden input which is placed before the actual checkbox to make sure a valid value is set if the checkbox is not checked.
 
@@ -292,13 +290,13 @@ Checkboxes as default will return a hidden input which is placed before the actu
 This can be disabled by passing `hiddenCheckbox => false` as an attribute
 
 	$Html->Form->checkbox(
-		'read_terms', 
-		'Read and agree to terms', 
+		'read_terms',
+		'Read and agree to terms',
 		array(
 			'hiddenCheckbox' => false
 		)
 	);
-	
+
 #### Select Boxes
 
 Select box options array can accept a multi-dimensional array which will be translated into `optgroups`.
@@ -317,7 +315,7 @@ Select box options array can accept a multi-dimensional array which will be tran
 			)
 		)
 	);
-	
+
 #### Wrapper Element
 
 As default the wrapper element is a `div` with 2 or 3 classes applied. First class is always `input` second class is the input type. A 3rd class is added to multiselects types to denote it being a multiselect so it can be targeted in the CSS.
@@ -335,7 +333,7 @@ These class can be overridden as well as the tag itself (or turned off if you do
 			)
 		)
 	);
-	
+
 	// Or turn it off with
 	$Html->Form->input(
 		'input_box',
@@ -359,7 +357,7 @@ When passing a label into an input, you can either pass it as a string to simply
 			'wrapper' => false
 		)
 	);
-	
+
 #### Injects
 
 As the methods return the full div / label / input it can be difficult or long-winded to do every method manually if you need to place text between the label and the input.
@@ -375,16 +373,16 @@ As a result, `before`, `between` and `after` injection points are available for 
 			'after' => 'p'
 		)
 	);
-	
+
 	// would return
 	<div class="input text">
-		Enter the 
+		Enter the
 		<label for="Amount">Price:</label>
 		you want in UK Pence
 		<input id="Amount" type="text" name="amount">
 		p
 	</div>
-	
+
 ## Contributing
 
 Please see [CONTRIBUTING](https://github.com/snscripts/html-helper/blob/master/CONTRIBUTING.md) for details.
