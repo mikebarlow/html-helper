@@ -35,7 +35,7 @@ class Html
             $this->Form->setHtml($this);
         }
 
-        $this->Attr = new \Snscripts\HtmlAttributes\Attributes;
+        $this->Attr = new \Snscripts\HtmlHelper\Attributes;
     }
 
     /**
