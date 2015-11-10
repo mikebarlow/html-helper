@@ -541,7 +541,6 @@ class Form
         return $out;
     }
 
-
     /**
      * generate a textarea
      *
@@ -554,8 +553,13 @@ class Form
             return '';
         }
 
-        unset($attr['type']);
-        return $this->Html->tag('textarea', $attr, '', true);
+        $contents = '';
+        if (! empty($attr['value'])) {
+            $contents = $attr['value'];
+        }
+
+        unset($attr['type'], $attr['value']);
+        return $this->Html->tag('textarea', $attr, $contents, true);
     }
 
     /**
