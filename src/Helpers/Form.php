@@ -766,7 +766,7 @@ class Form
     }
 
     /**
-     * use the FormData interface and find any post data
+     * use the Data interface and find any post data
      *
      * @param   string          input name (dot notation for multi-dimensional array)
      * @param   array   Array of attributes for the tag
@@ -808,7 +808,7 @@ class Form
      */
     public function setData($Data)
     {
-        if (! is_object($FormData) || ! $FormData instanceof DataInterface) {
+        if (! is_object($Data) || ! $Data instanceof DataInterface) {
             throw new \InvalidArgumentException(
                 'The Data Interface must be a valid DataInterface Object'
             );
