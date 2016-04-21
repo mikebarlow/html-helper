@@ -802,15 +802,15 @@ class Form
     /**
      * check and set the form data interface
      *
-     * @param   Object  Instance of an DataInterface
+     * @param   Object  Instance of an Data Interface
      * @return  bool
      * @throws  \InvalidArgumentException
      */
     public function setData($Data)
     {
-        if (! is_object($Data) || ! $Data instanceof DataInterface) {
+        if (! is_object($Data) || ! $Data instanceof Data) {
             throw new \InvalidArgumentException(
-                'The Data Interface must be a valid DataInterface Object'
+                'The Data Interface must be a valid Data Object'
             );
         }
         $this->Data = $Data;
