@@ -225,15 +225,15 @@ class Html
     /**
      * check and set the router interface
      *
-     * @param   Object  Instance of an RouterInterface
+     * @param   Object  Instance of an Router
      * @return  bool
      * @throws  \InvalidArgumentException
      */
     public function setRouter($Router)
     {
-        if (! is_object($Router) || ! $Router instanceof RouterInterface) {
+        if (! is_object($Router) || ! $Router instanceof Router) {
             throw new \InvalidArgumentException(
-                'The Router Interface must be a valid RouterInterface Object'
+                'The Router Interface must be a valid Router Object'
             );
         }
         $this->Router = $Router;
@@ -244,15 +244,15 @@ class Html
     /**
      * check and set the Asset interface
      *
-     * @param   Object  Instance of an AssetsInterface
+     * @param   Object  Instance of an Assets
      * @return  bool
      * @throws  \InvalidArgumentException
      */
     public function setAssets($Assets)
     {
-        if (! is_object($Assets) || ! $Assets instanceof AssetsInterface) {
+        if (! is_object($Assets) || ! $Assets instanceof Assets) {
             throw new \InvalidArgumentException(
-                'The Assets Interface must be a valid AssetsInterface Object'
+                'The Assets Interface must be a valid Assets Object'
             );
         }
         $this->Assets = $Assets;
