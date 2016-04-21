@@ -617,7 +617,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 'class' => 'required',
                 'value' => 'john@example.com'
             ),
-            $Html->Form->getPostData('User.email', array('name' => 'User[email]', 'type' => 'text', 'class' => 'required'))
+            $Html->Form->getData('User.email', array('name' => 'User[email]', 'type' => 'text', 'class' => 'required'))
         );
 
         $this->assertSame(
@@ -626,7 +626,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 'type' => 'checkbox',
                 'checked'
             ),
-            $Html->Form->getPostData('terms', array('name' => 'terms', 'type' => 'checkbox'))
+            $Html->Form->getData('terms', array('name' => 'terms', 'type' => 'checkbox'))
         );
 
         $this->assertSame(
@@ -635,7 +635,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 'type' => 'select',
                 'selected' => 'advanced'
             ),
-            $Html->Form->getPostData('User.plan', array('name' => 'User[plan]', 'type' => 'select'))
+            $Html->Form->getData('User.plan', array('name' => 'User[plan]', 'type' => 'select'))
         );
 
         $this->assertSame(
@@ -644,7 +644,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 'type' => 'radio',
                 'checked' => 'advanced'
             ),
-            $Html->Form->getPostData('User.plan', array('name' => 'User[plan]', 'type' => 'radio'))
+            $Html->Form->getData('User.plan', array('name' => 'User[plan]', 'type' => 'radio'))
         );
     }
 
@@ -666,7 +666,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 'type' => 'text',
                 'class' => 'required'
             ),
-            $Html->Form->getPostData(null, array('name' => 'User[email]', 'type' => 'text', 'class' => 'required'))
+            $Html->Form->getData(null, array('name' => 'User[email]', 'type' => 'text', 'class' => 'required'))
         );
 
         $this->assertSame(
@@ -675,7 +675,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
                 'type' => 'text',
                 'class' => 'required'
             ),
-            $Html->Form->getPostData('User.email', array('name' => 'User[email]', 'type' => 'text', 'class' => 'required'))
+            $Html->Form->getData('User.email', array('name' => 'User[email]', 'type' => 'text', 'class' => 'required'))
         );
     }
 
