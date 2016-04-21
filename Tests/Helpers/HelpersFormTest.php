@@ -1,7 +1,7 @@
 <?php
 
 use Snscripts\HtmlHelper\Html;
-use Snscripts\HtmlHelper\Interfaces;
+use Snscripts\HtmlHelper\Services;
 use Snscripts\HtmlHelper\Helpers;
 
 class HelpersFormTest extends \PHPUnit_Framework_TestCase
@@ -11,7 +11,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             'Snscripts\HtmlHelper\Helpers\Form',
             new Helpers\Form(
-                new Interfaces\BasicFormData
+                new Services\Basic\Data
             )
         );
     }
@@ -24,10 +24,10 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
     {
         return new Html(
             new Helpers\Form(
-                new Interfaces\BasicFormData
+                new Services\Basic\Data
             ),
-            new Interfaces\BasicRouter,
-            new Interfaces\BasicAssets
+            new Services\Basic\Router,
+            new Services\Basic\Assets
         );
     }
 
@@ -50,7 +50,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(
             $Form->setFormData(
-                new Interfaces\BasicFormData
+                new Services\Basic\Data
             )
         );
     }

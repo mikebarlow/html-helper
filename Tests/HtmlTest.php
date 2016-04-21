@@ -1,7 +1,7 @@
 <?php
 
 use Snscripts\HtmlHelper\Html;
-use Snscripts\HtmlHelper\Interfaces;
+use Snscripts\HtmlHelper\Services;
 use Snscripts\HtmlHelper\Helpers;
 
 class HtmlTest extends \PHPUnit_Framework_TestCase
@@ -12,10 +12,10 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
             'Snscripts\HtmlHelper\Html',
             new Html(
                 new Helpers\Form(
-                    new Interfaces\BasicFormData
+                    new Services\Basic\Data
                 ),
-                new Interfaces\BasicRouter,
-                new Interfaces\BasicAssets
+                new Services\Basic\Router,
+                new Services\Basic\Assets
             )
         );
     }
@@ -28,10 +28,10 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
     {
         return new Html(
             new Helpers\Form(
-                new Interfaces\BasicFormData
+                new Services\Basic\Data
             ),
-            new Interfaces\BasicRouter,
-            new Interfaces\BasicAssets
+            new Services\Basic\Router,
+            new Services\Basic\Assets
         );
     }
 
@@ -55,7 +55,7 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(
             $Html->setForm(
                 new Helpers\Form(
-                    new Interfaces\BasicFormData
+                    new Services\Basic\Data
                 )
             )
         );
@@ -77,7 +77,7 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(
             $Html->setRouter(
-                new Interfaces\BasicRouter
+                new Services\Basic\Router
             )
         );
     }
@@ -98,7 +98,7 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(
             $Html->setAssets(
-                new Interfaces\BasicAssets
+                new Services\Basic\Assets
             )
         );
     }
