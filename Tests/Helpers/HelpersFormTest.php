@@ -49,7 +49,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         $Form = $this->getFormNoConstructor();
 
         $this->assertTrue(
-            $Form->setFormData(
+            $Form->setData(
                 new Services\Basic\Data
             )
         );
@@ -60,7 +60,7 @@ class HelpersFormTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('InvalidArgumentException');
         $Form = $this->getFormNoConstructor();
 
-        $Form->setFormData(
+        $Form->setData(
             new \stdClass
         );
     }
