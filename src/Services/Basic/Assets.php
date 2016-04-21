@@ -2,7 +2,7 @@
 
 namespace Snscripts\HtmlHelper\Services\Basic;
 
-class BasicAssets implements \Snscripts\HtmlHelper\Interfaces\Assets
+class Assets implements \Snscripts\HtmlHelper\Interfaces\Assets
 {
     /**
      * base function to return the img path for the image tag
