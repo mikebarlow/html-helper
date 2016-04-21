@@ -45,25 +45,25 @@ Setup the helper as follows:
 
 	$Html = new \Snscripts\HtmlHelper\Html(
 	    new \Snscripts\HtmlHelper\Helpers\Form(
-	        new \Snscripts\HtmlHelper\Interfaces\BasicFormData
+	        new \Snscripts\HtmlHelper\Services\Basic\Data
 	    ),
-	    new \Snscripts\HtmlHelper\Interfaces\BasicRouter,
-	    new \Snscripts\HtmlHelper\Interfaces\BasicAssets
+	    new \Snscripts\HtmlHelper\Services\Basic\Router,
+	    new \Snscripts\HtmlHelper\Services\Basic\Assets
 	);
 
 The main object, is the Html object which contains the skeleton of the helper with the `tag()` method which is used to generate a html tag given a set of parameters. It also contains shortcut methods for certain html elements (For the list of available tags, see below).
 
-The first parameter, is the Form Object which contains all the methods needed to create and populate a HTML form. The Form Object requires an instance of `\Snscripts\HtmlHelper\Interfaces\FormData` which `BasicFormData` implements.
+The first parameter, is the Form Object which contains all the methods needed to create and populate a HTML form. The Form Object requires an instance of `\Snscripts\HtmlHelper\Interfaces\Data` which `Services\Basic\Data` implements.
 
-The second and third parameters should also be instances of `\Snscripts\HtmlHelper\Interfaces\Router` and `\Snscripts\HtmlHelper\Interfaces\Assets` which `BasicRouter` and `BasicAssets` implement respectively.
+The second and third parameters should also be instances of `\Snscripts\HtmlHelper\Interfaces\Router` and `\Snscripts\HtmlHelper\Interfaces\Assets` which `Services\Basic\Router` and `Services\Basic\Assets` implement respectively.
 
 ### Interfaces
 
 The interfaces provide a way of making this Html Helper Framework Agnostic. Each framework provides it's own way of getting post data / assets and routes so the interfaces provide a way for each framework to be implemented.
 
-BasicAssets and BasicRouter simply return they that is passed to the asset method or the link method, in a Framework the Router Interface would be coded to load up it's Router and pass the data received from the link method into the router allowing the framework to return the URL.
+`Services\Basic\Assets` and `Services\Basic\Router` simply return what is passed to the asset method or the link method, in a Framework the Router Interface would be coded to load up it's Router and pass the data received from the link method into the router allowing the framework to return the URL.
 
-BasicFormData simply turns a dot notation path into a POST variable and searches for data at that point and returns whatever it finds. Again, in a framework this would be coded to look possibly into the Request Object for post data.
+`Services\Basic\Data` simply turns a dot notation path into a POST variable and searches for data at that point and returns whatever it finds. Again, in a framework this would be coded to look possibly into the Request Object for post data.
 
 #### Framework Examples
 

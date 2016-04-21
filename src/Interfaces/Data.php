@@ -2,7 +2,7 @@
 
 namespace Snscripts\HtmlHelper\Interfaces;
 
-interface FormData
+interface Data
 {
     /**
      * get the post data to prefill the inputs

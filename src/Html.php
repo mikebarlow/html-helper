@@ -2,9 +2,9 @@
 
 namespace Snscripts\HtmlHelper;
 
-use \Snscripts\HtmlHelper\Interfaces\Router as RouterInterface;
-use \Snscripts\HtmlHelper\Interfaces\Assets as AssetsInterface;
-use \Snscripts\HtmlHelper\Helpers;
+use Snscripts\HtmlHelper\Interfaces\Router;
+use Snscripts\HtmlHelper\Interfaces\Assets;
+use Snscripts\HtmlHelper\Helpers;
 
 class Html
 {
@@ -19,13 +19,13 @@ class Html
      * for routes/ form data and assets
      *
      * @param   Object  Instance of Helpers\Form
-     * @param   Object  Instance of a RouterInterface
-     * @param   Object  Instance of an AssetsInterface
+     * @param   Object  Instance of a Router
+     * @param   Object  Instance of an Assets
      */
     public function __construct(
         Helpers\Form $Form,
-        RouterInterface $Router,
-        AssetsInterface $Assets
+        Router $Router,
+        Assets $Assets
     ) {
         $this->setForm($Form);
         $this->setRouter($Router);

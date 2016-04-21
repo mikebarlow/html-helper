@@ -1,8 +1,8 @@
 <?php
 
-namespace Snscripts\HtmlHelper\Interfaces;
+namespace Snscripts\HtmlHelper\Services\Basic;
 
-class BasicFormData implements FormData
+class Data implements \Snscripts\HtmlHelper\Interfaces\Data
 {
     /**
      * get the post data to prefill the inputs

@@ -1,18 +1,18 @@
 <?php
 
-class BasicFormDataTest extends \PHPUnit_Framework_TestCase
+class DataTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreateInstance()
     {
         $this->assertInstanceOf(
-            '\Snscripts\HtmlHelper\Interfaces\BasicFormData',
-            new \Snscripts\HtmlHelper\Interfaces\BasicFormData
+            '\Snscripts\HtmlHelper\Services\Basic\Data',
+            new \Snscripts\HtmlHelper\Services\Basic\Data
         );
     }
 
     public function testGetValueReturnsNullWhenInvalidNamePassed()
     {
-        $FormData = new \Snscripts\HtmlHelper\Interfaces\BasicFormData;
+        $FormData = new \Snscripts\HtmlHelper\Services\Basic\Data;
 
         $this->assertNull(
             $FormData->getValue(123)
@@ -29,7 +29,7 @@ class BasicFormDataTest extends \PHPUnit_Framework_TestCase
 
     public function testGetValueReturnsCorrectDataFromPostData()
     {
-        $FormData = new \Snscripts\HtmlHelper\Interfaces\BasicFormData;
+        $FormData = new \Snscripts\HtmlHelper\Services\Basic\Data;
         $_POST = [
             'User' => [
                 'email' => 'john@example.com'

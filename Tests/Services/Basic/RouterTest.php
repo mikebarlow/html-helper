@@ -1,18 +1,18 @@
 <?php
 
-class BasicRouterTest extends \PHPUnit_Framework_TestCase
+class RouterTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreateInstance()
     {
         $this->assertInstanceOf(
-            '\Snscripts\HtmlHelper\Interfaces\BasicRouter',
-            new \Snscripts\HtmlHelper\Interfaces\BasicRouter
+            '\Snscripts\HtmlHelper\Services\Basic\Router',
+            new \Snscripts\HtmlHelper\Services\Basic\Router
         );
     }
 
     public function testGetUrlReturnsSameString()
     {
-        $Router = new \Snscripts\HtmlHelper\Interfaces\BasicRouter;
+        $Router = new \Snscripts\HtmlHelper\Services\Basic\Router;
 
         $this->assertSame(
             '/page/about-us',

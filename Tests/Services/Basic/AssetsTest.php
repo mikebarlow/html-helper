@@ -1,18 +1,18 @@
 <?php
 
-class BasicAssetsTest extends \PHPUnit_Framework_TestCase
+class AssetsTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanCreateInstance()
     {
         $this->assertInstanceOf(
-            '\Snscripts\HtmlHelper\Interfaces\BasicAssets',
-            new \Snscripts\HtmlHelper\Interfaces\BasicAssets
+            '\Snscripts\HtmlHelper\Services\Basic\Assets',
+            new \Snscripts\HtmlHelper\Services\Basic\Assets
         );
     }
 
     public function testGetImageReturnsSameString()
     {
-        $Assets = new \Snscripts\HtmlHelper\Interfaces\BasicAssets;
+        $Assets = new \Snscripts\HtmlHelper\Services\Basic\Assets;
 
         $this->assertSame(
             '/assets/img/logo.png',
@@ -22,7 +22,7 @@ class BasicAssetsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetStyleReturnsSameString()
     {
-        $Assets = new \Snscripts\HtmlHelper\Interfaces\BasicAssets;
+        $Assets = new \Snscripts\HtmlHelper\Services\Basic\Assets;
 
         $this->assertSame(
             '/assets/css/site.css',
@@ -32,7 +32,7 @@ class BasicAssetsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetScriptReturnsSameString()
     {
-        $Assets = new \Snscripts\HtmlHelper\Interfaces\BasicAssets;
+        $Assets = new \Snscripts\HtmlHelper\Services\Basic\Assets;
 
         $this->assertSame(
             '/assets/js/attachments.js',

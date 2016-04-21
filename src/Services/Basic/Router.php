@@ -1,8 +1,8 @@
 <?php
 
-namespace Snscripts\HtmlHelper\Interfaces;
+namespace Snscripts\HtmlHelper\Services\Basic;
 
-class BasicRouter implements Router
+class BasicRouter implements \Snscripts\HtmlHelper\Interfaces\Router
 {
     /**
      * base function to return the url for the link method

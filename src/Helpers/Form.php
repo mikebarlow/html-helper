@@ -2,12 +2,12 @@
 
 namespace Snscripts\HtmlHelper\Helpers;
 
-use \Snscripts\HtmlHelper\Interfaces\FormData as FormDataInterface;
+use \Snscripts\HtmlHelper\Interfaces\Data;
 use \Snscripts\HtmlHelper\Html as HtmlObject;
 
 class Form
 {
-    protected $FormData;
+    protected $Data;
     protected $Html;
 
     /**
@@ -41,9 +41,9 @@ class Form
      *
      * @param   Object  Instance of the Html Helper Object
      */
-    public function __construct(FormDataInterface $FormData)
+    public function __construct(Data $Data)
     {
-        $this->setFormData($FormData);
+        $this->setData($Data);
     }
 
     /**
@@ -435,7 +435,7 @@ class Form
         }
         $attr['name'] = $this->transformName($name);
 
-        $attr = $this->getPostData($name, $attr);
+        $attr = $this->getData($name, $attr);
 
         if ($tag !== 'input') {
             $generate = 'generate' . ucfirst(strtolower($tag)) . 'Field';
@@ -772,13 +772,13 @@ class Form
      * @param   array   Array of attributes for the tag
      * @return  array   Return the attribute array with added post data
      */
-    public function getPostData($name, $attr)
+    public function getData($name, $attr)
     {
         if (empty($name)) {
             return $attr;
         }
 
-        $value = $this->FormData->getValue($name);
+        $value = $this->Data->getValue($name);
 
         if ($value !== null) {
             $isCheckbox = (isset($attr['type']) && $attr['type'] == 'checkbox');
@@ -802,18 +802,18 @@ class Form
     /**
      * check and set the form data interface
      *
-     * @param   Object  Instance of an FormDataInterface
+     * @param   Object  Instance of an DataInterface
      * @return  bool
      * @throws  \InvalidArgumentException
      */
-    public function setFormData($FormData)
+    public function setData($Data)
     {
-        if (! is_object($FormData) || ! $FormData instanceof FormDataInterface) {
+        if (! is_object($FormData) || ! $FormData instanceof DataInterface) {
             throw new \InvalidArgumentException(
-                'The FormData Interface must be a valid FormDataInterface Object'
+                'The Data Interface must be a valid DataInterface Object'
             );
         }
-        $this->FormData = $FormData;
+        $this->Data = $Data;
 
         return true;
     }
