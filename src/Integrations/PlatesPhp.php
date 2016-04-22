@@ -2,7 +2,9 @@
 
 namespace Snscripts\HtmlHelper\Integrations;
 
-class PlatesPhp extends \League\Plates\Extension\ExtensionInterface
+use \League\Plates\Engine;
+
+class PlatesPhp implements \League\Plates\Extension\ExtensionInterface
 {
     public $htmlHelper;
 
@@ -23,7 +25,7 @@ class PlatesPhp extends \League\Plates\Extension\ExtensionInterface
      */
     public function __construct($HtmlHelper)
     {
-        $this->HtmlHelper = $htmlHelper;
+        $this->HtmlHelper = $HtmlHelper;
     }
 
     /**
@@ -33,6 +35,6 @@ class PlatesPhp extends \League\Plates\Extension\ExtensionInterface
      */
     public function getHtmlHelper()
     {
-        return $this->htmlHelper;
+        return $this->HtmlHelper;
     }
 }
