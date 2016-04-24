@@ -12,6 +12,24 @@ class Router implements \Snscripts\HtmlHelper\Interfaces\Router
      */
     public function getUrl($url)
     {
+        if (is_array($url) && ! empty($url['route'])) {
+            try {
+                $Comet = \CometPHP\Comet::getInstance();
+            } catch (\CometPHP\Exceptions\CometNotBooted $e) {
+                return null;
+            }
+
+            $routeName = $url['route'];
+            unset($url['route']);
+
+            $generatedUrl = $Comet['routeGenerator']->generate(
+                $routeName,
+                $url
+            );
+
+            return $generatedUrl;
+        }
+
         return $url;
     }
 }

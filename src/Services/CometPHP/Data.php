@@ -16,8 +16,14 @@ class Data implements \Snscripts\HtmlHelper\Interfaces\Data
             return null;
         }
 
+        try {
+            $Comet = \CometPHP\Comet::getInstance();
+        } catch (\CometPHP\Exceptions\CometNotBooted $e) {
+            return null;
+        }
+
         $bits = explode('.', $name);
-        $postData = $_POST;
+        $postData = $Comet['request']->request->all();
 
         foreach ($bits as $key) {
             if (is_array($postData) && isset($postData[$key])) {
