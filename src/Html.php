@@ -278,4 +278,24 @@ class Html
 
         return true;
     }
+
+    /**
+     * return a copy of the Assets service object
+     *
+     * @return object
+     */
+    public function getAssetsService()
+    {
+        return $this->Assets;
+    }
+
+    /**
+     * return a copy of the Router service object
+     *
+     * @return object
+     */
+    public function getRouterService()
+    {
+        return $this->Router;
+    }
 }

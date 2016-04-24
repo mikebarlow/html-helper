@@ -819,6 +819,16 @@ class Form
     }
 
     /**
+     * get the data service object
+     *
+     * @return object
+     */
+    public function getDataService()
+    {
+        return $this->Data;
+    }
+
+    /**
      * check and set the HTML Object
      *
      * @param   Object  Instance of an Html

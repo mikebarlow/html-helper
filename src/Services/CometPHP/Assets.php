@@ -18,8 +18,12 @@ class Assets implements \Snscripts\HtmlHelper\Interfaces\Assets
             return null;
         }
 
-        $asset = $Comet['view']->getFunction('asset')->call(
-            $Comet['view'],
+        if (! is_array($assetData)) {
+            $assetData = [$assetData];
+        }
+
+        $asset = $Comet['template']->getFunction('asset')->call(
+            $this->template,
             $assetData
         );
 

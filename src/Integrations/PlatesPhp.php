@@ -35,6 +35,9 @@ class PlatesPhp implements \League\Plates\Extension\ExtensionInterface
      */
     public function getHtmlHelper()
     {
+        $this->HtmlHelper->Form->getDataService()->template = $this->template;
+        $this->HtmlHelper->getRouterService()->template = $this->template;
+        $this->HtmlHelper->getAssetsService()->template = $this->template;
         return $this->HtmlHelper;
     }
 }
