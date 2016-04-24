@@ -5,6 +5,28 @@ namespace Snscripts\HtmlHelper\Services\CometPHP;
 class Assets implements \Snscripts\HtmlHelper\Interfaces\Assets
 {
     /**
+     * base function to return assets
+     *
+     * @param   mixed   asset path data received from the image method
+     * @return  string  url to pass to img or css
+     */
+    protected function getAsset($assetData)
+    {
+        try {
+            $Comet = \CometPHP\Comet::getInstance();
+        } catch (\CometPHP\Exceptions\CometNotBooted $e) {
+            return null;
+        }
+
+        $asset = $Comet['view']->getFunction('asset')->call(
+            $Comet['view'],
+            $assetData
+        );
+
+        return $asset;
+    }
+
+    /**
      * base function to return the img path for the image tag
      *
      * @param   mixed   img path data received from the image method
@@ -12,7 +34,7 @@ class Assets implements \Snscripts\HtmlHelper\Interfaces\Assets
      */
     public function getImage($img)
     {
-        return $img;
+        return $this->getAsset($img);
     }
 
     /**
@@ -23,7 +45,7 @@ class Assets implements \Snscripts\HtmlHelper\Interfaces\Assets
      */
     public function getStyle($css)
     {
-        return $css;
+        return $this->getAsset($css);
     }
 
     /**
@@ -34,6 +56,6 @@ class Assets implements \Snscripts\HtmlHelper\Interfaces\Assets
      */
     public function getScript($js)
     {
-        return $js;
+        return $this->getAsset($js);
     }
 }
