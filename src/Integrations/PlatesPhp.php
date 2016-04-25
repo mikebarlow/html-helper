@@ -4,7 +4,7 @@ namespace Snscripts\HtmlHelper\Integrations;
 
 use \League\Plates\Engine;
 
-class PlatesPhp implements \League\Plates\Extension\ExtensionInterface
+class PlatesPHP implements \League\Plates\Extension\ExtensionInterface
 {
     public $htmlHelper;
 
