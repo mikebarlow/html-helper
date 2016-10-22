@@ -2,7 +2,7 @@
     "name": "snscripts/html-helper",
     "description": "Framework agnostic HTML Helper",
     "keywords": ["HTML", "Helper", "Forms", "Framework Agnostic"],
-    "homepage": "https://github.com/snscripts/html-helper",
+    "homepage": "https://github.com/mikebarlow/html-helper",
     "license": "MIT",
     "authors": [
         {
