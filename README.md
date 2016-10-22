@@ -1,10 +1,10 @@
 # Framework Agnostic HTML-Helper
 
 [![Author](http://img.shields.io/badge/author-@mikebarlow-red.svg?style=flat-square)](https://twitter.com/mikebarlow)
-[![Source Code](http://img.shields.io/badge/source-snscripts/html--helper-brightgreen.svg?style=flat-square)](https://github.com/snscripts/html-helper)
-[![Latest Version](https://img.shields.io/github/release/snscripts/html-helper.svg?style=flat-square)](https://github.com/snscripts/html-helper/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/snscripts/html-helper/blob/master/LICENSE)
-[![Build Status](https://img.shields.io/travis/snscripts/html-helper/master.svg?style=flat-square)](https://travis-ci.org/snscripts/html-helper)
+[![Source Code](http://img.shields.io/badge/source-snscripts/html--helper-brightgreen.svg?style=flat-square)](https://github.com/mikebarlow/html-helper)
+[![Latest Version](https://img.shields.io/github/release/mikebarlow/html-helper.svg?style=flat-square)](https://github.com/mikebarlow/html-helper/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/mikebarlow/html-helper/blob/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/mikebarlow/html-helper/master.svg?style=flat-square)](https://travis-ci.org/mikebarlow/html-helper)
 
 ## Introduction
 
@@ -385,8 +385,8 @@ As a result, `before`, `between` and `after` injection points are available for 
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/snscripts/html-helper/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/mikebarlow/html-helper/blob/master/CONTRIBUTING.md) for details.
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/snscripts/html-helper/blob/master/LICENSE) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/mikebarlow/html-helper/blob/master/LICENSE) for more information.
